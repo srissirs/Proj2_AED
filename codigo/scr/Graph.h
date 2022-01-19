@@ -8,28 +8,26 @@
 
 using namespace std;
 
+struct Edge {
+    int dest;   /// Destination node
+    int weight; /// An integer weight
+    string line; ///
+};
+struct Node {
+    list<Edge> adj; /// The list of outgoing edges (to adjacent nodes)
+    int dist;
+    int pred;
+    double latitude;
+    double longitude;
+    int dirPos; /// Position of the stop in a specific line
+    int dir;       ///Direction in a line
+    bool visited;
+    string zone;
+    string stopName;
+    list<string> line;
+    string code;
+};
 class Graph {
-    struct Edge {
-        int dest;   /// Destination node
-        int weight; /// An integer weight
-        string line; ///
-    };
-
-    struct Node {
-        list<Edge> adj; /// The list of outgoing edges (to adjacent nodes)
-        int dist;
-        int pred;
-        float latitude;
-        float longitude;
-        int dirPos; /// Position of the stop in a specific line
-        int dir;       ///Direction in a line
-        bool visited;
-        string zone;
-        string stopName;
-        list<string> line;
-        string code;
-    };
-
     int n;              /// Graph size (vertices are numbered from 1 to n)
     bool hasDir;        /// false: undirect; true: directed
     vector<Node> nodes; /// The list of nodes being represented
@@ -48,7 +46,8 @@ public:
     list<int> dijkstra_path(int a, int b);
 
     float distanceBetweenNodes(int a, int b);
-
 };
+
+
 
 #endif
