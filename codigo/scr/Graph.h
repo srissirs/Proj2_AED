@@ -24,7 +24,7 @@ struct Node {
     bool visited;
     string zone;
     string stopName;
-    list<string> line;
+    list<tuple<string,int,int>> lines;     /// lineName /dir/dirPos
     string code;
 };
 class Graph {
