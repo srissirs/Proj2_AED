@@ -10,7 +10,9 @@ int main() {
     Graph graph = Graph(0,false);
     readDataStops(graph);
     addLines(graph);
-    //uniteNearStops(graph);
+    uniteNearStops(graph);
+    displayMenu();
+
 
     return 0;
 

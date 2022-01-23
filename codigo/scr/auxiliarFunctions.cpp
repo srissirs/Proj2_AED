@@ -28,8 +28,14 @@ void uniteNearStops(Graph& graph) {
     for (int i=0; i<nodes.size()-1;i++){
         for (int j=i+1; j< nodes.size();j++ ){
             double distance = haversine(nodes[i].latitude,nodes[i].longitude,nodes[j].latitude,nodes[j].longitude);
-            if(distance<=0.150)
+            if(distance<=0.150){
                 graph.addEdge(i,j,distance);
+            }
         }
     }
+}
+
+void displayMenu() {
+    cout << "MENU:"<<endl;
+    cout << "[0] Exit" << endl;
 }

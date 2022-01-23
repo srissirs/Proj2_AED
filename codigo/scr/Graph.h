@@ -2,7 +2,6 @@
 #define PROJ2AED_GRAPH_H
 
 #include "minHeap.h"
-#include "auxiliarFunctions.h"
 #include <vector>
 #include <list>
 #include <iostream>
