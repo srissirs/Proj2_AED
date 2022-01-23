@@ -2,9 +2,11 @@
 #define PROJ2AED_GRAPH_H
 
 #include "minHeap.h"
+#include "auxiliarFunctions.h"
 #include <vector>
 #include <list>
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -32,6 +34,7 @@ class Graph {
     bool hasDir;        /// false: undirect; true: directed
     vector<Node> nodes; /// The list of nodes being represented
 
+    map<string, int> mapNodes;
     void dijkstra(int s);
 
 public:
@@ -45,15 +48,22 @@ public:
 
     // Add edge from source to destination with a certain weight
     void addEdge(int src, int dest, double weight);
+
     void addLine(tuple<string,int,int> line, int pos);
-    void setNodes(vector<Node> newNodes) { this->nodes = newNodes;}
+
+    void setNodes(vector<Node> newNodes) {
+        this->nodes = newNodes;
+        this->n=newNodes.size();}
 
     vector<Node>& getNodes() { return nodes;}
+
+    void setMap(map<string, int> newMap) { this->mapNodes = newMap;}
+
+    map<string, int>& getMap() { return mapNodes;}
+
     // ----- Functions to implement in this class -----
     int dijkstra_distance(int a, int b);
     list<int> dijkstra_path(int a, int b);
-
-    float distanceBetweenNodes(int a, int b);
 };
 
 

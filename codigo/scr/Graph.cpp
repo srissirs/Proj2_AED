@@ -32,6 +32,9 @@ void Graph::addLine(tuple<string, int, int> line, int pos) {
     nodes[pos].lines.push_back(line);
 }
 
+
+
+
 // ----------------------------------------------------------
 // 1) Algoritmo de Dijkstra e caminhos mais curtos
 // ----------------------------------------------------------

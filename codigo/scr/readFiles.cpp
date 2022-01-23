@@ -1,7 +1,8 @@
 #include "readFiles.h"
 #include <fstream>
 
-vector<Node> readDataStops(map<string,int> &mapNodes){
+void readDataStops(Graph& graph){
+    map<string, int> mapNodes = graph.getMap();
     ifstream stops("../codigo/dataset/stops.csv");
     string firstLine;
     getline(stops,firstLine);
@@ -31,16 +32,18 @@ vector<Node> readDataStops(map<string,int> &mapNodes){
 
         vectorPos++;
     }
-    stops.close();
-    return nodes;
+    graph.setMap(mapNodes);
+    graph.setNodes(nodes);
+    stops.close();;
 }
 
-void addLines(Graph& graph,map<string,int>& mapNodes){
+void addLines(Graph& graph){
     ifstream lines("../codigo/dataset/lines.csv");
     string firstLine;
     getline(lines,firstLine);
     string beginDocDir= "../codigo/dataset/line_";
     string lineCode;
+    map<string ,int> mapNodes = graph.getMap();
     vector<Node> nodes = graph.getNodes();
     while(!lines.eof()){
         getline(lines,lineCode,',');
@@ -66,16 +69,20 @@ void addLines(Graph& graph,map<string,int>& mapNodes){
             int pos = mapNodes[stopCode];
             if(i==0) firstStopPos =pos;
             graph.addLine({lineCode,0,i},pos);
+            /*
             if(i>0){
                 double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
                 graph.addEdge(pos1,pos,weight);
             }
+             */
             pos1=pos;
         }
+        /*
         if(numberOfStops_1==0){
             double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[firstStopPos].latitude,nodes[firstStopPos].longitude);
             graph.addEdge(pos1,firstStopPos,weight);
         }
+         */
         line_0.close();
         for (int i=0; i<numberOfStops_1;i++){
             Node node;
@@ -84,10 +91,12 @@ void addLines(Graph& graph,map<string,int>& mapNodes){
             line_1.ignore(1);
             int pos = mapNodes[stopCode];
             graph.addLine({lineCode,1,i},pos);
+            /*
             if(i>0){
                 double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
                 graph.addEdge(pos1,pos,weight);
             }
+             */
             pos1=pos;
         }
         line_1.close();
@@ -96,8 +105,8 @@ void addLines(Graph& graph,map<string,int>& mapNodes){
 
     // TESTES
 
-    /*
-    int pos = mapNodes["HSJ6"];
+
+    int pos = 6;
     cout << nodes[pos].code +" " + nodes[pos].stopName + " ";
 
     for(auto p:graph.getNodes().operator[](pos).adj){
@@ -116,6 +125,6 @@ void addLines(Graph& graph,map<string,int>& mapNodes){
     //cout<<nodes[1184].code;
     //cout<<nodes[125].code;
     //cout<< nodes.size();
-     */
+
 
 }

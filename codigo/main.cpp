@@ -1,16 +1,17 @@
 #include <iostream>
 #include "scr/Graph.h"
 #include "scr/readFiles.h"
+#include "scr/auxiliarFunctions.h"
 #include <map>
 
 using namespace std;
 
 int main() {
-    map<string, int> mapNodes;
-    vector<Node> nodes = readDataStops(mapNodes);
-    Graph graph = Graph(nodes.size(),false);
-    graph.setNodes(nodes);
-    addLines(graph,mapNodes);
+    Graph graph = Graph(0,false);
+    readDataStops(graph);
+    addLines(graph);
+    //uniteNearStops(graph);
+
     return 0;
 
 }

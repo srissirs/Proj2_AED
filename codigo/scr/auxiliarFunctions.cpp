@@ -1,17 +1,6 @@
 #include "auxiliarFunctions.h"
 
 
-void uniteStops(Graph &graph){
-    vector<Node> nodes = graph.getNodes();
-    for( int j =0; j<nodes.size();j++){
-        for(auto i = j; i<nodes.size();i++){
-            for(auto line:nodes[j].lines){
-
-            }
-        }
-    }
-}
-
 double haversine(double lat1, double lon1,
                         double lat2, double lon2) {
     // distance between latitudes
@@ -32,4 +21,15 @@ double haversine(double lat1, double lon1,
     double rad = 6371;
     double c = 2 * asin(sqrt(a));
     return rad * c;
+}
+
+void uniteNearStops(Graph& graph) {
+    vector<Node> nodes = graph.getNodes();
+    for (int i=0; i<nodes.size()-1;i++){
+        for (int j=i+1; j< nodes.size();j++ ){
+            double distance = haversine(nodes[i].latitude,nodes[i].longitude,nodes[j].latitude,nodes[j].longitude);
+            if(distance<=0.150)
+                graph.addEdge(i,j,distance);
+        }
+    }
 }
