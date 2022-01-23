@@ -1,22 +1,16 @@
 #include "readFiles.h"
 #include <fstream>
-#include "Graph.h"
-#include <map>
 
-
-vector<Node> readDataStops(){
+vector<Node> readDataStops(map<string,int> &mapNodes){
     ifstream stops("../codigo/dataset/stops.csv");
-    ifstream lines("../codigo/dataset/lines.csv");
     string firstLine;
     getline(stops,firstLine);
     double latitude;double longitude;
-    int dir;       ///Direction in a line
     string zone;
     string stopName;
     list<string> line;
     string code;
     vector<Node> nodes;
-    map<string, int> mapNodes;
     int vectorPos=0;
     while(!stops.eof()){
         Node node;
@@ -34,11 +28,20 @@ vector<Node> readDataStops(){
         node.longitude=longitude;
         nodes.push_back(node);
         mapNodes[code]= vectorPos;
+
         vectorPos++;
     }
+    stops.close();
+    return nodes;
+}
+
+void addLines(Graph& graph,map<string,int>& mapNodes){
+    ifstream lines("../codigo/dataset/lines.csv");
+    string firstLine;
     getline(lines,firstLine);
     string beginDocDir= "../codigo/dataset/line_";
     string lineCode;
+    vector<Node> nodes = graph.getNodes();
     while(!lines.eof()){
         getline(lines,lineCode,',');
         string lineName;
@@ -52,15 +55,26 @@ vector<Node> readDataStops(){
         line_1 >> numberOfStops_1;
         line_0.ignore(1);
         line_1.ignore(1);
+        int pos1;
+        int firstStopPos;
+        if(numberOfStops_1==0)  numberOfStops_0--;
         for (int i=0; i<numberOfStops_0;i++){
             Node node;
             string stopCode;
             line_0 >> stopCode;
             line_0.ignore(1);
             int pos = mapNodes[stopCode];
-            node = nodes[pos];
-            node.lines.push_back({lineCode,0,i});
-            nodes[pos] = node;
+            if(i==0) firstStopPos =pos;
+            graph.addLine({lineCode,0,i},pos);
+            if(i>0){
+                double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
+                graph.addEdge(pos1,pos,weight);
+            }
+            pos1=pos;
+        }
+        if(numberOfStops_1==0){
+            double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[firstStopPos].latitude,nodes[firstStopPos].longitude);
+            graph.addEdge(pos1,firstStopPos,weight);
         }
         line_0.close();
         for (int i=0; i<numberOfStops_1;i++){
@@ -69,22 +83,39 @@ vector<Node> readDataStops(){
             line_1 >> stopCode;
             line_1.ignore(1);
             int pos = mapNodes[stopCode];
-            node = nodes[pos];
-            node.lines.push_back({lineCode,1,i});
-            nodes[pos] = node;
+            graph.addLine({lineCode,1,i},pos);
+            if(i>0){
+                double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
+                graph.addEdge(pos1,pos,weight);
+            }
+            pos1=pos;
         }
         line_1.close();
     }
+
+
+    // TESTES
+
     /*
-    cout << nodes[1].code +" " + nodes[0].stopName + " ";
-    cout << nodes[100].dir<<endl;
-    stops.close();
-    for(auto p:nodes[1].lines){
-        cout<<get<0>(p)<<endl;
-        cout<<get<1>(p)<<endl;
-        cout<<get<2>(p)<<endl;
+    int pos = mapNodes["HSJ6"];
+    cout << nodes[pos].code +" " + nodes[pos].stopName + " ";
+
+    for(auto p:graph.getNodes().operator[](pos).adj){
+        cout<<endl;
+        cout<<nodes[p.dest].code<<endl;
+        cout<<p.weight<<endl;
     }
-    cout<< nodes.size();
+
+
+    for( auto a:graph.getNodes().operator[](pos).lines){
+        cout<<get<0>(a)<<endl;
+        cout<<get<1>(a)<<endl;
+        cout<<get<2>(a)<<endl;
+    }
+
+    //cout<<nodes[1184].code;
+    //cout<<nodes[125].code;
+    //cout<< nodes.size();
      */
-    return nodes;
+
 }
