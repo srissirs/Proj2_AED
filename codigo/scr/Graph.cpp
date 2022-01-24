@@ -1,5 +1,4 @@
 #include "Graph.h"
-#include <climits>
 
 // Constructor: nr nodes and direction (default: undirected)
 Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {
@@ -7,13 +6,20 @@ Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {
 
 
 
-
 // Add edge from source to destination with a certain weight
-void Graph::addEdge(int src, int dest, double weight) {
+void Graph::addEdge(int src, int dest, double weight,string line) {
     if (src<0 || src>n || dest<0 || dest>n) return;
-    if(exists(src,dest, weight)) return;
-    nodes[src].adj.push_back({dest, weight});
-    if (!hasDir) nodes[dest].adj.push_back({src, weight});
+    if(exists(src,dest, weight,line)) return;
+    nodes[src].adj.push_back({src,dest, weight,line});
+    if (!hasDir) nodes[dest].adj.push_back({src,dest, weight,line});
+}
+
+bool Graph::exists(int src, int dest, double weight,string line){
+    for( auto edge: nodes[src].adj){
+        if (edge.weight==weight and edge.dest == dest and edge.line==line)
+            return true;
+    }
+    return false;
 }
 
 bool Graph::exists(int src, int dest, double weight){
@@ -21,15 +27,7 @@ bool Graph::exists(int src, int dest, double weight){
         if (edge.weight==weight and edge.dest == dest)
             return true;
     }
-    for( auto edge: nodes[dest].adj){
-        if (edge.weight==weight and edge.dest == src)
-            return true;
-    }
     return false;
-}
-
-void Graph::addLine(tuple<string, int, int> line, int pos) {
-    nodes[pos].lines.push_back(line);
 }
 
 

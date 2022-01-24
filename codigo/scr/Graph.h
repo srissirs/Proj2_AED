@@ -10,9 +10,10 @@
 using namespace std;
 
 struct Edge {
+    int src;
     int dest;   /// Destination node
     double weight; /// An integer weight
-    //string line; ///
+    string line; ///
 };
 struct Node {
     list<Edge> adj; /// The list of outgoing edges (to adjacent nodes)
@@ -20,12 +21,9 @@ struct Node {
     int pred;
     double latitude;
     double longitude;
-    int dirPos; /// Position of the stop in a specific line
-    int dir;       ///Direction in a line
     bool visited;
     string zone;
     string stopName;
-    list<tuple<string,int,int>> lines;     /// lineName /dir/dirPos
     string code;
 };
 class Graph {
@@ -43,12 +41,11 @@ public:
     void setNode(int pos,const Node &node){
         nodes[pos] = node;
     }
+    bool exists(int src, int dest, double weight,string line);
+
     bool exists(int src, int dest, double weight);
-
     // Add edge from source to destination with a certain weight
-    void addEdge(int src, int dest, double weight);
-
-    void addLine(tuple<string,int,int> line, int pos);
+    void addEdge(int src, int dest, double weight,string line);
 
     void setNodes(vector<Node> newNodes) {
         this->nodes = newNodes;

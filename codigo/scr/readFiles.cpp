@@ -59,25 +59,21 @@ void addLines(Graph& graph){
         line_0.ignore(1);
         line_1.ignore(1);
         int pos1;
-        int firstStopPos;
-        if(numberOfStops_1==0)  numberOfStops_0--;
+      //  int firstStopPos;
+       // if(numberOfStops_1==0)  numberOfStops_0--;
         for (int i=0; i<numberOfStops_0;i++){
             Node node;
             string stopCode;
             line_0 >> stopCode;
             line_0.ignore(1);
             int pos = mapNodes[stopCode];
-            if(i==0) firstStopPos =pos;
-            graph.addLine({lineCode,0,i},pos);
+           // if(i==0) firstStopPos =pos;
             if(i>0){
                 double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
-                graph.addEdge(pos1,pos,weight);
+                graph.addEdge(pos1,pos,weight,lineName);
+
             }
             pos1=pos;
-        }
-        if(numberOfStops_1==0){
-            double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[firstStopPos].latitude,nodes[firstStopPos].longitude);
-            graph.addEdge(pos1,firstStopPos,weight);
         }
         line_0.close();
         for (int i=0; i<numberOfStops_1;i++){
@@ -86,33 +82,27 @@ void addLines(Graph& graph){
             line_1 >> stopCode;
             line_1.ignore(1);
             int pos = mapNodes[stopCode];
-            graph.addLine({lineCode,1,i},pos);
             if(i>0){
                 double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
-                graph.addEdge(pos1,pos,weight);
+                graph.addEdge(pos1,pos,weight,lineName);
+
             }
             pos1=pos;
         }
         line_1.close();
     }
-
-
+  /*  int pos = 1126;
+    cout<<graph.getNodes().operator[](pos).adj.size()<<endl;
     // TESTES
-    int pos = 6;
+
     cout << nodes[pos].code +" " + nodes[pos].stopName + " ";
 
     for(auto p:graph.getNodes().operator[](pos).adj){
-        cout<<endl;
-        cout<<nodes[p.dest].code<<endl;
-        cout<<p.weight<<endl;
-    }
+        cout<<p.line<<endl<<nodes[p.src].code<<endl<<nodes[p.dest].code<<endl<<p.weight<<endl<<endl;
+
+    }*/
 
 
-    for( auto a:graph.getNodes().operator[](pos).lines){
-        cout<<get<0>(a)<<endl;
-        cout<<get<1>(a)<<endl;
-        cout<<get<2>(a)<<endl;
-    }
 
     //cout<<nodes[1184].code;
     //cout<<nodes[125].code;
