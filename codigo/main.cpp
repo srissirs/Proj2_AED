@@ -12,14 +12,11 @@ int main() {
     addLines(graph);
     uniteNearStops(graph);
     displayMenu();
-    list<list<int>> paths = graph.bestPathLessLineChange(graph.getMap()["CMV"],graph.getMap()["COB3"]);
 
-    for (auto i:paths){
-        for(auto k:i){
-           cout<<graph.getNodes()[k].code<<endl;
-        }
-        cout<<endl<<endl;
-    }
+    graph.bfs(graph.getMap()["ETRP2"],graph.getMap()["PDC"]);
+    printPath(graph,graph.getMap()["PDC"]);
+
+
 
     return 0;
 

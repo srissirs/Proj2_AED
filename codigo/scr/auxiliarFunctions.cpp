@@ -44,3 +44,20 @@ void displayMenu() {
     cout << "[0] Exit" << endl;
 }
 
+
+
+void printPath(Graph graph, int dest){
+    vector<Node> path;
+    while(graph.getNodes()[dest].pred!=-1){
+        path.push_back(graph.getNodes()[dest]);
+        dest=graph.getNodes()[dest].pred;
+    }
+    cout<<graph.getNodes()[dest].code<<endl;
+
+    for (vector<Node>::reverse_iterator i = path.rbegin();
+         i != path.rend(); ++i ){
+        cout<<i->code<< endl;
+
+    }
+}
+
