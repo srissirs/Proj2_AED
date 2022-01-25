@@ -13,4 +13,6 @@ void uniteNearStops(Graph& graph);
 
 void displayMenu();
 
+void bestPathLessLineChange(int src, int dest);
+
 #endif //PROJ2AED_AUXILIARFUNCTIONS_H
