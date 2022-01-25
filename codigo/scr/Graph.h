@@ -62,9 +62,9 @@ public:
 
     map<string, int> &getMap() { return mapNodes; }
 
-    int getWeight(int src, int dest, string line);
+    int getWeight(int src,int choice,Edge edge);
 
-    list<list<int>> bestPathLessLineChange(int src, int dest);
+    vector<pair<int,list<int>>> bestPathLessLineChange(int src, int dest);
 
     list<int> dijkstra_path(int a, int b);
 

@@ -1,12 +1,11 @@
 #include "Graph.h"
 #include <climits>
+#include <set>
 
 #define INF INT_MAX
 // Constructor: nr nodes and direction (default: undirected)
 Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {
 }
-
-
 
 // Add edge from source to destination with a certain weight
 void Graph::addEdge(int src, int dest, double weight,string line) {
@@ -32,37 +31,46 @@ bool Graph::exists(int src, int dest, double weight){
     return false;
 }
 
-int Graph::getWeight(int src,int dest,string line){
-    if(nodes[src].line==line)  return 0;
-    else return 1;
+int Graph::getWeight(int src,int choice,Edge edge){
+    if(choice==1){
+        if(nodes[src].line==edge.line)  return 0;
+        else return 1;
+    }
+    else if(choice==2){
+        return edge.weight;
+    }
+    else if(choice == 3){
+    }
 }
-
-
 // ----------------------------------------------------------
 // 1) Algoritmo de Dijkstra e caminhos mais curtos
 // ----------------------------------------------------------
 
-list<list<int>> Graph::bestPathLessLineChange(int src, int dest){
+vector<pair<int,list<int>>> Graph::bestPathLessLineChange(int src, int dest){
+    set<string> lineCodes;
     vector<pair<int,list<int>>> v;
-    for (auto edge: nodes[src].adj){
-        nodes[src].line = edge.line;
+    for (auto edge: nodes[src].adj)
+        lineCodes.insert(edge.line);
+    for (auto line: lineCodes){
+        cout<<line<<endl;
+        nodes[src].line = line;
         v.push_back({dijkstra_distance(src,dest), dijkstra_path(src,dest)});
     }
     int minWeight= INF;
-    list<list<int>> paths;
+    vector<pair<int,list<int>>> paths;
     for (auto p :v){
         if(p.first<minWeight)
             minWeight = p.first;
     }
     for (auto p :v){
         if(p.first==minWeight)
-            paths.push_back(p.second);
+            paths.push_back({p.first,p.second});
     }
     return paths;
 }
 // ..............................
 // b) Caminho mais curto entre dois nós
-// TODO
+
 list<int> Graph::dijkstra_path(int a, int b) {
     dijkstra(a);
     list<int> path;
@@ -97,9 +105,9 @@ void Graph::dijkstra(int src) {
         nodes[u].visited= true;
         for (auto  edge:nodes[u].adj){
             int dest = edge.dest;
-            int weigh = getWeight(u,dest,edge.line);
+            int weigh = getWeight(u,1,edge);
             if (!nodes[dest].visited && nodes[u].dist + weigh < nodes[dest].dist){
-                nodes[dest].dist = nodes[dest].dist + weigh;
+                nodes[dest].dist = nodes[u].dist + weigh;
                 q.decreaseKey(dest, nodes[dest].dist);
                 nodes[dest].line = edge.line;
                 nodes[dest].pred = u;
