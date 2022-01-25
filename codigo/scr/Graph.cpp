@@ -51,3 +51,27 @@ list<int> Graph::dijkstra_path(int a, int b) {
     list<int> path;
     return path;
 }
+
+bool Graph::bfs(int src,int dest){
+    list<int> queueu;
+    for(Node& node : nodes){
+        node.visited=false;
+        node.pred=-1;
+    }
+    nodes[src].visited=true;
+    queueu.push_back(src);
+    while(!queueu.empty()){
+        int u =queueu.front();
+        queueu.pop_front();
+        for(auto &edge :nodes[u].adj){
+            int d =edge.dest;
+            if(!nodes[d].visited){
+                nodes[d].visited=true;
+                nodes[d].pred=u;
+                queueu.push_back(d);
+                if(d==dest) return true;
+            }
+        }
+    }
+    return false;
+}
