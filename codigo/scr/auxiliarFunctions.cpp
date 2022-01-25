@@ -45,6 +45,7 @@ void displayMenu() {
 }
 
 
+
 void printPath(Graph graph, int dest){
     vector<Node> path;
     while(graph.getNodes()[dest].pred!=-1){
@@ -59,3 +60,4 @@ void printPath(Graph graph, int dest){
 
     }
 }
+

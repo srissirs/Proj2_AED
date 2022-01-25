@@ -1,5 +1,7 @@
 #include "Graph.h"
+#include <climits>
 
+#define INF INT_MAX
 // Constructor: nr nodes and direction (default: undirected)
 Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {
 }
@@ -30,27 +32,50 @@ bool Graph::exists(int src, int dest, double weight){
     return false;
 }
 
-
+int Graph::getWeight(int src,int dest,string line){
+    if(nodes[src].line==line)  return 0;
+    else return 1;
+}
 
 
 // ----------------------------------------------------------
 // 1) Algoritmo de Dijkstra e caminhos mais curtos
 // ----------------------------------------------------------
 
-// ..............................
-// a) Distância entre dois nós
-// TODO
-int Graph::dijkstra_distance(int a, int b) {
-    return -1;
+list<list<int>> Graph::bestPathLessLineChange(int src, int dest){
+    vector<pair<int,list<int>>> v;
+    for (auto edge: nodes[src].adj){
+        nodes[src].line = edge.line;
+        v.push_back({dijkstra_distance(src,dest), dijkstra_path(src,dest)});
+    }
+    int minWeight= INF;
+    list<list<int>> paths;
+    for (auto p :v){
+        if(p.first<minWeight)
+            minWeight = p.first;
+    }
+    for (auto p :v){
+        if(p.first==minWeight)
+            paths.push_back(p.second);
+    }
+    return paths;
 }
-
 // ..............................
 // b) Caminho mais curto entre dois nós
 // TODO
 list<int> Graph::dijkstra_path(int a, int b) {
+    dijkstra(a);
     list<int> path;
+    if(nodes[b].dist==INF) return path;
+    path.push_back(b);
+    int v = b;
+    while (v!=a){
+        v=nodes[v].pred;
+        path.push_front(v);
+    }
     return path;
 }
+
 
 bool Graph::bfs(int src,int dest){
     list<int> queueu;
@@ -75,3 +100,38 @@ bool Graph::bfs(int src,int dest){
     }
     return false;
 }
+
+int Graph::dijkstra_distance(int a, int b) {
+    dijkstra(a);
+    if (nodes[b].dist == INF) return -1;
+    return nodes[b].dist;
+}
+
+void Graph::dijkstra(int src) {
+    MinHeap<int,int> q(n,-1);
+    for (int v=0; v<n; v++){
+        nodes[v].dist =INF;
+        q.insert(v,INF);
+        nodes[v].visited = false;
+    }
+    nodes[src].dist = 0;
+    q.decreaseKey(src,0);
+    nodes[src].pred = src;
+    while (q.getSize()>0){
+        int u = q.removeMin();
+        nodes[u].visited= true;
+        for (auto  edge:nodes[u].adj){
+            int dest = edge.dest;
+            int weigh = getWeight(u,dest,edge.line);
+            if (!nodes[dest].visited && nodes[u].dist + weigh < nodes[dest].dist){
+                nodes[dest].dist = nodes[dest].dist + weigh;
+                q.decreaseKey(dest, nodes[dest].dist);
+                nodes[dest].line = edge.line;
+                nodes[dest].pred = u;
+            }
+        }
+    }
+
+}
+
+
