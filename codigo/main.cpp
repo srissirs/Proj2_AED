@@ -7,18 +7,25 @@
 using namespace std;
 
 int main() {
-    Graph graph = Graph(0,true);
+    Graph graph = Graph(2787,true);
     readDataStops(graph);
     addLines(graph);
     uniteNearStops(graph);
-    displayMenu();
-    int pos = graph.getMap()["ESED1"];
 
-    for(auto p:graph.getNodes().operator[](pos).adj){
-        cout<<p.line<<endl<<graph.getNodes()[p.src].code<<endl<<graph.getNodes()[p.dest].code<<endl<<p.weight<<endl<<endl;
+    /*
+    int aa = graph.getMap()["CMV"], b = graph.getMap()["COB3"];
+    list<int> list = graph.dijkstra_path(aa,b);
+*/
 
-    }
+    /*
+     displayMenu();
+      int pos = graph.getMap()["ESED1"];
 
+   for(auto p:graph.getNodes().operator[](pos).adj){
+       cout<<p.line<<endl<<graph.getNodes()[p.src].code<<endl<<graph.getNodes()[p.dest].code<<endl<<p.weight<<endl<<endl;
+
+   }
+*/
     return 0;
 
 }
