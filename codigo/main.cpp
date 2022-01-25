@@ -12,11 +12,13 @@ int main() {
     addLines(graph);
     uniteNearStops(graph);
     displayMenu();
-    int pos = graph.getMap()["ESED1"];
+    list<list<int>> paths = graph.bestPathLessLineChange(graph.getMap()["CMV"],graph.getMap()["COB3"]);
 
-    for(auto p:graph.getNodes().operator[](pos).adj){
-        cout<<p.line<<endl<<graph.getNodes()[p.src].code<<endl<<graph.getNodes()[p.dest].code<<endl<<p.weight<<endl<<endl;
-
+    for (auto i:paths){
+        for(auto k:i){
+           cout<<graph.getNodes()[k].code<<endl;
+        }
+        cout<<endl<<endl;
     }
 
     return 0;

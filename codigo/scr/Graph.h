@@ -25,6 +25,7 @@ struct Node {
     string zone;
     string stopName;
     string code;
+    string line;
 };
 class Graph {
     int n;              /// Graph size (vertices are numbered from 1 to n)
@@ -32,36 +33,42 @@ class Graph {
     vector<Node> nodes; /// The list of nodes being represented
 
     map<string, int> mapNodes;
-    void dijkstra(int s);
+
+    void dijkstra(int src);
 
 public:
     // Constructor: nr nodes and direction (default: undirected)
     Graph(int nodes, bool dir = false);
 
-    void setNode(int pos,const Node &node){
+    void setNode(int pos, const Node &node) {
         nodes[pos] = node;
     }
-    bool exists(int src, int dest, double weight,string line);
+
+    bool exists(int src, int dest, double weight, string line);
 
     bool exists(int src, int dest, double weight);
+
     // Add edge from source to destination with a certain weight
-    void addEdge(int src, int dest, double weight,string line);
+    void addEdge(int src, int dest, double weight, string line);
 
     void setNodes(vector<Node> newNodes) {
         this->nodes = newNodes;
-        this->n=newNodes.size();}
+        this->n = newNodes.size();
+    }
 
-    vector<Node>& getNodes() { return nodes;}
+    vector<Node> &getNodes() { return nodes; }
 
-    void setMap(map<string, int> newMap) { this->mapNodes = newMap;}
+    void setMap(map<string, int> newMap) { this->mapNodes = newMap; }
 
-    map<string, int>& getMap() { return mapNodes;}
+    map<string, int> &getMap() { return mapNodes; }
 
-    // ----- Functions to implement in this class -----
-    int dijkstra_distance(int a, int b);
+    int getWeight(int src, int dest, string line);
+
+    list<list<int>> bestPathLessLineChange(int src, int dest);
+
     list<int> dijkstra_path(int a, int b);
+
+    int dijkstra_distance(int a, int b);
+
 };
-
-
-
 #endif
