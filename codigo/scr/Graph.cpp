@@ -34,6 +34,7 @@ bool Graph::exists(int src, int dest, double weight){
 }
 
 int Graph::getWeight(int src,int choice,Edge edge){
+
     if(choice==1){
         if(nodes[src].line==edge.line)  return 0;
         else return 1;
@@ -42,6 +43,8 @@ int Graph::getWeight(int src,int choice,Edge edge){
         return edge.weight;
     }
     else if(choice == 3){
+        if(nodes[src].zone==nodes[edge.dest].zone) return 0;
+        else return 1;
     }
 }
 // ----------------------------------------------------------
@@ -50,8 +53,8 @@ int Graph::getWeight(int src,int choice,Edge edge){
 
 // a) Distância entre dois nós
 // TODO
-int Graph::dijkstra_distance(int a, int b) {
-    dijkstra(a);
+int Graph::dijkstra_distance(int a, int b,int choice) {
+    dijkstra(a,choice);
     if (nodes[b].dist == INF) return -1;
     return nodes[b].dist;
 }
@@ -64,7 +67,7 @@ vector<pair<int,list<Node>>> Graph::bestPathLessLineChange(int src, int dest){
         lineCodes.insert(edge.line);
     for (auto line: lineCodes){
         nodes[src].line = line;
-        v.push_back({dijkstra_distance(src,dest), dijkstra_pathNodes(src,dest)});
+        v.push_back({dijkstra_distance(src,dest,1), dijkstra_pathNodes(src,dest,1)});
     }
     int minWeight= INF;
     vector<pair<int,list<Node>>> paths;
@@ -98,32 +101,25 @@ list<Node> Graph::bfs_path(int src, int dest) {
 
 
 
-list<int> Graph::dijkstra_path(int a, int b) {
-    dijkstra(a);
-    list<int> path;
+
+list<Node> Graph::dijkstra_pathNodes(int a, int b,int choice) {
+    list<Node> path;
+    dijkstra(a, choice);
     if(nodes[b].dist==INF) return path;
-    path.push_front(b);
+    path.push_front(nodes[b]);
     int v = b;
     while (v!=a){
         v=nodes[v].pred;
-        path.push_back(v);
+        path.push_front(nodes[v]);
     }
-    return path;
-}
 
-list<Node> Graph::dijkstra_pathNodes(int a, int b) {
-    list<Node> path;
-    list<int> path1 = dijkstra_path(a, b);
-    for (int i: path1) {
-        path.push_front(nodes[i]);
-    }
     return path;
 }
 
 
 
 
-void Graph::dijkstra(int s) {
+void Graph::dijkstra(int s,int choice) {
     MinHeap<int, int> q(n, -1);
     for (int v=1; v<=n; v++) {
         nodes[v].dist = INF;
@@ -138,7 +134,7 @@ void Graph::dijkstra(int s) {
         nodes[u].visited = true;
         for (auto edge: nodes[u].adj) {
             double v = edge.dest;
-            double w = getWeight(u,1,edge);
+            double w = getWeight(u, choice, edge);
             string l = edge.line;
             if (!nodes[v].visited && (nodes[u].dist + w )< nodes[v].dist) {
                 nodes[v].dist = nodes[u].dist + w;

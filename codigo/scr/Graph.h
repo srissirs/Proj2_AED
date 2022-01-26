@@ -34,7 +34,7 @@ class Graph {
 
     map<string, int> mapNodes;
 
-    void dijkstra(int src);
+    void dijkstra(int src, int choice);
 
 public:
     // Constructor: nr nodes and direction (default: undirected)
@@ -65,12 +65,10 @@ public:
     int getWeight(int src,int choice,Edge edge);
 
     // ----- Functions to implement in this class -----
-    int dijkstra_distance(int a, int b);
+    int dijkstra_distance(int a, int b, int choice);
 
 
-
-    list<int> dijkstra_path(int a, int b);
-    list<Node> dijkstra_pathNodes(int a, int b);
+    list<Node> dijkstra_pathNodes(int a, int b, int choice);
     list<Node> bfs_path(int src,int dest);
 
     bool bfs(int src,int dest);

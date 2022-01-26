@@ -56,15 +56,18 @@ void printPath(list<Node> list) {
             node1 = node2;
             list.pop_front();
             node2 = list.front();
-            if (node2.line != node1.line) {
-                cout << endl << endl << "Take the " << node2.line << " line" << endl;
-                cout << node1.code<< "->" << node2.code;
-            }else{
-                cout << "->" << node2.code;
-            }
+            if (node2.line == "walking") {
+                cout << endl << endl << "Walk from " << node1.code << "(" << node1.zone << ")" << " to " << node2.code
+                     << node2.code << "(" << node2.zone << ")";
+            }else if (node2.line != node1.line) {
+                        cout << endl << endl << "Take the " << node2.line << " line" << endl;
+                cout << node1.code << "(" << node1.zone << ")" << "->" << node2.code << "(" << node2.zone << ")";
+                }else{
+                cout << "->" << node2.code << "(" << node2.zone << ")";
+                }
+             }
         }
     }
-}
 
 
 string chooseStopByCoordinates(Graph graph, double latitude, double longitude){

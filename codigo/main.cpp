@@ -35,7 +35,7 @@ int main() {
         cout<<"Source Longitude:";
         cin>>srcLongitude;
         cout<<endl;
-        string stopCodeSrc=chooseStopByCoordinates(graph,srcLatitude,srcLongitude);
+        stopCodeSrc=chooseStopByCoordinates(graph,srcLatitude,srcLongitude);
         cout<<endl;
 
         cout<<"-------DEST COORDINATES------"<<endl;
@@ -46,29 +46,36 @@ int main() {
         cout<<"Destination Longitude:";
         cin>>DestLongitude;
         cout<<endl;
-        string stopCodeDest=chooseStopByCoordinates(graph,DestLatitude,DestLongitude);
+        stopCodeDest=chooseStopByCoordinates(graph,DestLatitude,DestLongitude);
     }
     int chosenMethod;
     cout<<endl;
     displaysMethods();
     cin>>chosenMethod;
-    int src=graph.getMap()[stopCodeSrc];
+    int src = graph.getMap()[stopCodeSrc];
     int dest=graph.getMap()[stopCodeDest];
     if(chosenMethod==0){
-
+        list<Node> list = graph.dijkstra_pathNodes(src, dest,3);
+        printPath(list);
     }
     if(chosenMethod==1){
         vector<pair<int,list<Node>>> paths = graph.bestPathLessLineChange(src, dest);
+        list<Node> list;
         for(int i=0;i<paths.size();i++){
+            list = paths[i].second;
+            list.front().line = "";
             cout<<endl<<"------OPTION "<<i+1<<"-------"<<endl;
-            printPath(paths[i].second);
+            printPath(list);
         }
     }
     if(chosenMethod==2){
         list<Node> list = graph.bfs_path(src, dest);
         printPath(list);
     }
-    if(chosenMethod==3){}
+    if(chosenMethod==3){
+        list<Node> list = graph.dijkstra_pathNodes(src, dest,2);
+        printPath(list);
+    }
 
     return 0;
 
