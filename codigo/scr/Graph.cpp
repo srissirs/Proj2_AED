@@ -43,13 +43,6 @@ int Graph::getWeight(int src,int dest,string line){
 // ----------------------------------------------------------
 
 
-// a) Distância entre dois nós
-// TODO
-int Graph::dijkstra_distance(int a, int b) {
-    dijkstra(a);
-    if (nodes[b].dist == INT_MAX) return -1;
-    return nodes[b].dist;
-}
 
 list<list<int>> Graph::bestPathLessLineChange(int src, int dest){
     vector<pair<int,list<int>>> v;

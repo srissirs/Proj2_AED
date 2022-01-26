@@ -23,7 +23,7 @@ void displaysCoordinatesMenu(){
 
 
 void displaysMethods(){
-    cout << "-------------MENU-------------"<<endl;
+    cout << "-----------METHODS------------"<<endl;
     cout << "[0] Best price"<<endl;
     cout << "[1] Less changes between lines" << endl;
     cout << "[2] Less bus stops" << endl;
