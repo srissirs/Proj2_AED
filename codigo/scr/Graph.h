@@ -64,11 +64,13 @@ public:
 
     int getWeight(int src,int choice,Edge edge);
 
+    // ----- Functions to implement in this class -----
+    int dijkstra_distance(int a, int b);
+    list<int> dijkstra_path(int a, int b);
+    bool bfs(int src,int dest);
+
     vector<pair<int,list<int>>> bestPathLessLineChange(int src, int dest);
 
-    list<int> dijkstra_path(int a, int b);
-
-    int dijkstra_distance(int a, int b);
 
 };
 #endif

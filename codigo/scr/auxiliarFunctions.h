@@ -11,8 +11,10 @@ double haversine(double lat1, double lon1, double lat2, double lon2);
 
 void uniteNearStops(Graph& graph);
 
-void displayMenu();
+void printPath(Graph graph, int dest);
 
 void bestPathLessLineChange(int src, int dest);
+
+string chooseStopByCoordinates(Graph graph, double latitude, double longitude);
 
 #endif //PROJ2AED_AUXILIARFUNCTIONS_H

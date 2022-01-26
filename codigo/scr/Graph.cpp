@@ -2,7 +2,9 @@
 #include <climits>
 #include <set>
 
-#define INF INT_MAX
+#define INF (INT_MAX/2)
+
+
 // Constructor: nr nodes and direction (default: undirected)
 Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {
 }
@@ -84,12 +86,65 @@ list<int> Graph::dijkstra_path(int a, int b) {
     return path;
 }
 
+
+
+
+void Graph::dijkstra(int s) {
+    MinHeap<int, int> q(n, -1);
+    for (int v=1; v<=n; v++) {
+        nodes[v].dist = INF;
+        q.insert(v,INF);
+        nodes[v].visited = false;
+    }
+    nodes[s].dist = 0;
+    q.decreaseKey(s, 0);
+    nodes[s].pred = s;
+    while (q.getSize()>0) {
+        int u = q.removeMin();
+        nodes[u].visited = true;
+        for (auto edge: nodes[u].adj) {
+            int v = edge.dest;
+            int w = edge.weight;
+            if (!nodes[v].visited && (nodes[u].dist + w )< nodes[v].dist) {
+                nodes[v].dist = nodes[u].dist + w;
+                q.decreaseKey(v, nodes[v].dist);
+                nodes[v].pred = u;
+            }
+        }
+    }
+}
+
+
+bool Graph::bfs(int src,int dest){
+    list<int> queueu;
+    for(Node& node : nodes){
+        node.visited=false;
+        node.pred=-1;
+    }
+    nodes[src].visited=true;
+    queueu.push_back(src);
+    while(!queueu.empty()){
+        int u =queueu.front();
+        queueu.pop_front();
+        for(auto &edge :nodes[u].adj){
+            int d =edge.dest;
+            if(!nodes[d].visited){
+                nodes[d].visited=true;
+                nodes[d].pred=u;
+                queueu.push_back(d);
+                if(d==dest) return true;
+            }
+        }
+    }
+    return false;
+}
+
 int Graph::dijkstra_distance(int a, int b) {
     dijkstra(a);
     if (nodes[b].dist == INF) return -1;
     return nodes[b].dist;
 }
-
+/*
 void Graph::dijkstra(int src) {
     MinHeap<int,int> q(n,-1);
     for (int v=0; v<n; v++){
@@ -114,19 +169,8 @@ void Graph::dijkstra(int src) {
             }
         }
     }
+   
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
