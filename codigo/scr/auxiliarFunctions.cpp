@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <iomanip>
 #include "auxiliarFunctions.h"
 
 
@@ -39,10 +41,8 @@ void uniteNearStops(Graph& graph) {
     }
 }
 
-void displayMenu() {
-    cout << "MENU:"<<endl;
-    cout << "[0] Exit" << endl;
-}
+
+
 
 
 void printPath(list<Node> list) {
@@ -64,7 +64,28 @@ void printPath(list<Node> list) {
             }
         }
     }
-
-
 }
 
+
+string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
+    vector<Node> nodes = graph.getNodes();
+    vector<pair<double,Node>> distances;
+    for (int i=0; i<graph.getNodes().size();i++) {
+        Node node=graph.getNodes()[i];
+        distances.push_back({haversine(latitude,longitude,node.latitude,node.longitude),node});
+    }
+
+    std::sort(distances.begin(), distances.end(), [](auto &left, auto &right) {
+        return left.first < right.first;
+    });
+
+    cout<<"Closest bus stops:"<<endl;
+    for(int j=0;j<5;j++){
+        cout<<"["<<j<<"]"<<" "<<distances[j].second.code<<" - "<< distances[j].second.stopName << " " <<distances[j].first<<"Km"<<endl;
+    }
+    int pos;
+    string busStopCode;
+    cout<<endl<<"Choose one of the bus stops:";
+    cin>>pos;
+    return distances[pos].second.code;
+}

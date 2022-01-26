@@ -62,6 +62,7 @@ public:
 
     map<string, int> &getMap() { return mapNodes; }
 
+    int getWeight(int src,int choice,Edge edge);
 
     // ----- Functions to implement in this class -----
     int dijkstra_distance(int a, int b);
@@ -74,9 +75,9 @@ public:
 
     bool bfs(int src,int dest);
 
-    int getWeight(int src, int dest, string line);
+    vector<pair<int,list<int>>> bestPathLessLineChange(int src, int dest);
 
-    list<list<int>> bestPathLessLineChange(int src, int dest);
+
 
 };
 #endif
