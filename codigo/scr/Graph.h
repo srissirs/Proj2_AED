@@ -72,9 +72,6 @@ public:
 
     list<list<int>> bestPathLessLineChange(int src, int dest);
 
-    list<int> dijkstra_path(int a, int b);
-
-    int dijkstra_distance(int a, int b);
 
 };
 #endif
