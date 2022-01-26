@@ -12,9 +12,16 @@ int main() {
     readDataStops(graph);
     addLines(graph);
     uniteNearStops(graph);
+    int aa = graph.getMap()["HSJ12"], b = graph.getMap()["SAL4"];
+    list<Node> list1 = graph.dijkstra_pathNodes(aa, b);
 
+
+
+
+     printPath( list1);
   
   /*
+
     displayMenu();
     vector<pair<int,list<int>>> paths = graph.bestPathLessLineChange(graph.getMap()["ESED2"],graph.getMap()["SAL4"]);
 

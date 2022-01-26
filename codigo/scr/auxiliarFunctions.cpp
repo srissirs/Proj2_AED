@@ -42,18 +42,27 @@ void uniteNearStops(Graph& graph) {
 }
 
 
-void printPath(Graph graph, int dest){
-    vector<Node> path;
-    while(graph.getNodes()[dest].pred!=-1){
-        path.push_back(graph.getNodes()[dest]);
-        dest=graph.getNodes()[dest].pred;
-    }
-    cout<<graph.getNodes()[dest].code<<endl;
 
-    for (vector<Node>::reverse_iterator i = path.rbegin();
-         i != path.rend(); ++i ){
-        cout<<i->code<< endl;
 
+
+void printPath(list<Node> list) {
+    if (list.empty()) {
+        cout << "The two stops can't be connected";
+    }else{
+        cout << "There will be " << list.size() << " stops.";
+        Node node1;
+        Node node2 = list.front();
+        while (!list.empty()) {
+            node1 = node2;
+            list.pop_front();
+            node2 = list.front();
+            if (node2.line != node1.line) {
+                cout << endl << endl << "Take the " << node2.line << " line" << endl;
+                cout << node1.code<< "->" << node2.code;
+            }else{
+                cout << "->" << node2.code;
+            }
+        }
     }
 }
 

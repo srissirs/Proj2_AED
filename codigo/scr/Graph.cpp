@@ -48,8 +48,17 @@ int Graph::getWeight(int src,int choice,Edge edge){
 // 1) Algoritmo de Dijkstra e caminhos mais curtos
 // ----------------------------------------------------------
 
+// a) Distância entre dois nós
+// TODO
+int Graph::dijkstra_distance(int a, int b) {
+    dijkstra(a);
+    if (nodes[b].dist == INF) return -1;
+    return nodes[b].dist;
+}
+
 vector<pair<int,list<int>>> Graph::bestPathLessLineChange(int src, int dest){
     set<string> lineCodes;
+
     vector<pair<int,list<int>>> v;
     for (auto edge: nodes[src].adj)
         lineCodes.insert(edge.line);
@@ -73,15 +82,41 @@ vector<pair<int,list<int>>> Graph::bestPathLessLineChange(int src, int dest){
 // ..............................
 // b) Caminho mais curto entre dois nós
 
+// TODO
+
+list<Node> Graph::bfs_path(int src, int dest) {
+    list<Node> path;
+    if (bfs(src, dest)) {
+        while(nodes[dest].pred!=-1){
+            path.push_front(nodes[dest]);
+            dest=nodes[dest].pred;
+        }
+        path.push_front(nodes[dest]);
+    }
+
+    return path;
+}
+
+
+
 list<int> Graph::dijkstra_path(int a, int b) {
     dijkstra(a);
     list<int> path;
     if(nodes[b].dist==INF) return path;
-    path.push_back(b);
+    path.push_front(b);
     int v = b;
     while (v!=a){
         v=nodes[v].pred;
-        path.push_front(v);
+        path.push_back(v);
+    }
+    return path;
+}
+
+list<Node> Graph::dijkstra_pathNodes(int a, int b) {
+    list<Node> path;
+    list<int> path1 = dijkstra_path(a, b);
+    for (int i: path1) {
+        path.push_front(nodes[i]);
     }
     return path;
 }
@@ -103,12 +138,14 @@ void Graph::dijkstra(int s) {
         int u = q.removeMin();
         nodes[u].visited = true;
         for (auto edge: nodes[u].adj) {
-            int v = edge.dest;
-            int w = edge.weight;
+            double v = edge.dest;
+            double w = edge.weight;
+            string l = edge.line;
             if (!nodes[v].visited && (nodes[u].dist + w )< nodes[v].dist) {
                 nodes[v].dist = nodes[u].dist + w;
                 q.decreaseKey(v, nodes[v].dist);
                 nodes[v].pred = u;
+                nodes[v].line = l;
             }
         }
     }
@@ -131,6 +168,7 @@ bool Graph::bfs(int src,int dest){
             if(!nodes[d].visited){
                 nodes[d].visited=true;
                 nodes[d].pred=u;
+                nodes[d].line = edge.line;
                 queueu.push_back(d);
                 if(d==dest) return true;
             }
@@ -139,11 +177,9 @@ bool Graph::bfs(int src,int dest){
     return false;
 }
 
-int Graph::dijkstra_distance(int a, int b) {
-    dijkstra(a);
-    if (nodes[b].dist == INF) return -1;
-    return nodes[b].dist;
-}
+
+
+
 /*
 void Graph::dijkstra(int src) {
     MinHeap<int,int> q(n,-1);
