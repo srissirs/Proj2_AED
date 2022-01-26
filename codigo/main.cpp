@@ -11,15 +11,13 @@ int main() {
     readDataStops(graph);
     addLines(graph);
     uniteNearStops(graph);
+    int aa = graph.getMap()["HSJ12"], b = graph.getMap()["SAL4"];
+    list<Node> list1 = graph.dijkstra_pathNodes(aa, b);
 
 
-    /*
-    int aa = graph.getMap()["CMV"], b = graph.getMap()["COB3"];
-    list<int> list = graph.dijkstra_path(aa,b);
-*/
 
-    /*
-     displayMenu();
+     printPath( list1);
+     /*
       int pos = graph.getMap()["ESED1"];
 
     displayMenu();

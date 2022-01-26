@@ -17,7 +17,7 @@ struct Edge {
 };
 struct Node {
     list<Edge> adj; /// The list of outgoing edges (to adjacent nodes)
-    int dist;
+    double dist;
     int pred;
     double latitude;
     double longitude;
@@ -65,16 +65,18 @@ public:
 
     // ----- Functions to implement in this class -----
     int dijkstra_distance(int a, int b);
+
+
+
     list<int> dijkstra_path(int a, int b);
+    list<Node> dijkstra_pathNodes(int a, int b);
+    list<Node> bfs_path(int src,int dest);
+
     bool bfs(int src,int dest);
 
     int getWeight(int src, int dest, string line);
 
     list<list<int>> bestPathLessLineChange(int src, int dest);
-
-    list<int> dijkstra_path(int a, int b);
-
-    int dijkstra_distance(int a, int b);
 
 };
 #endif
