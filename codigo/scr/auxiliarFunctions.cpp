@@ -52,7 +52,7 @@ void printPath(list<Node> list) {
         cout << "There will be " << list.size() << " stops.";
         Node node1;
         Node node2 = list.front();
-        while (!list.empty()) {
+        while (list.size()!=1) {
             node1 = node2;
             list.pop_front();
             node2 = list.front();

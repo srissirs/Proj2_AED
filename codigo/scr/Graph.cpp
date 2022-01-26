@@ -56,19 +56,18 @@ int Graph::dijkstra_distance(int a, int b) {
     return nodes[b].dist;
 }
 
-vector<pair<int,list<int>>> Graph::bestPathLessLineChange(int src, int dest){
+vector<pair<int,list<Node>>> Graph::bestPathLessLineChange(int src, int dest){
     set<string> lineCodes;
 
-    vector<pair<int,list<int>>> v;
+    vector<pair<int,list<Node>>> v;
     for (auto edge: nodes[src].adj)
         lineCodes.insert(edge.line);
     for (auto line: lineCodes){
-        cout<<line<<endl;
         nodes[src].line = line;
-        v.push_back({dijkstra_distance(src,dest), dijkstra_path(src,dest)});
+        v.push_back({dijkstra_distance(src,dest), dijkstra_pathNodes(src,dest)});
     }
     int minWeight= INF;
-    vector<pair<int,list<int>>> paths;
+    vector<pair<int,list<Node>>> paths;
     for (auto p :v){
         if(p.first<minWeight)
             minWeight = p.first;
@@ -130,7 +129,7 @@ void Graph::dijkstra(int s) {
         nodes[v].dist = INF;
         q.insert(v,INF);
         nodes[v].visited = false;
-    }
+   }
     nodes[s].dist = 0;
     q.decreaseKey(s, 0);
     nodes[s].pred = s;
@@ -139,7 +138,7 @@ void Graph::dijkstra(int s) {
         nodes[u].visited = true;
         for (auto edge: nodes[u].adj) {
             double v = edge.dest;
-            double w = edge.weight;
+            double w = getWeight(u,1,edge);
             string l = edge.line;
             if (!nodes[v].visited && (nodes[u].dist + w )< nodes[v].dist) {
                 nodes[v].dist = nodes[u].dist + w;
@@ -153,23 +152,23 @@ void Graph::dijkstra(int s) {
 
 
 bool Graph::bfs(int src,int dest){
-    list<int> queueu;
+    list<int> queue;
     for(Node& node : nodes){
         node.visited=false;
         node.pred=-1;
     }
     nodes[src].visited=true;
-    queueu.push_back(src);
-    while(!queueu.empty()){
-        int u =queueu.front();
-        queueu.pop_front();
+    queue.push_back(src);
+    while(!queue.empty()){
+        int u =queue.front();
+        queue.pop_front();
         for(auto &edge :nodes[u].adj){
             int d =edge.dest;
             if(!nodes[d].visited){
                 nodes[d].visited=true;
                 nodes[d].pred=u;
                 nodes[d].line = edge.line;
-                queueu.push_back(d);
+                queue.push_back(d);
                 if(d==dest) return true;
             }
         }

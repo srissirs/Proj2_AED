@@ -12,27 +12,6 @@ int main() {
     readDataStops(graph);
     addLines(graph);
     uniteNearStops(graph);
-    int aa = graph.getMap()["HSJ12"], b = graph.getMap()["SAL4"];
-    list<Node> list1 = graph.dijkstra_pathNodes(aa, b);
-
-
-
-
-     printPath( list1);
-  
-  /*
-
-    displayMenu();
-    vector<pair<int,list<int>>> paths = graph.bestPathLessLineChange(graph.getMap()["ESED2"],graph.getMap()["SAL4"]);
-
-    for (auto i:paths){
-        cout<<endl<< "NUMBER OF LINE GHANGE " <<i.first<<endl;
-        for(auto k:i.second){
-           cout<<graph.getNodes()[k].code<<endl;
-        }
-        cout<<endl<<endl;
-        */
-
     int menuOption;
     string stopCodeSrc;
     string stopCodeDest;
@@ -73,11 +52,22 @@ int main() {
     cout<<endl;
     displaysMethods();
     cin>>chosenMethod;
-    int scr=graph.getMap()[stopCodeSrc];
+    int src=graph.getMap()[stopCodeSrc];
     int dest=graph.getMap()[stopCodeDest];
-    if(chosenMethod==0){}
-    if(chosenMethod==1){}
-    if(chosenMethod==2){}
+    if(chosenMethod==0){
+
+    }
+    if(chosenMethod==1){
+        vector<pair<int,list<Node>>> paths = graph.bestPathLessLineChange(src, dest);
+        for(int i=0;i<paths.size();i++){
+            cout<<endl<<"------OPTION "<<i+1<<"-------"<<endl;
+            printPath(paths[i].second);
+        }
+    }
+    if(chosenMethod==2){
+        list<Node> list = graph.bfs_path(src, dest);
+        printPath(list);
+    }
     if(chosenMethod==3){}
 
     return 0;

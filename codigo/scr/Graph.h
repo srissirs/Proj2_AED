@@ -75,7 +75,7 @@ public:
 
     bool bfs(int src,int dest);
 
-    vector<pair<int,list<int>>> bestPathLessLineChange(int src, int dest);
+    vector<pair<int,list<Node>>> bestPathLessLineChange(int src, int dest);
 
 
 
