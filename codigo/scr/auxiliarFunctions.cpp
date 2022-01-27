@@ -45,20 +45,26 @@ void uniteNearStops(Graph& graph) {
 
 
 
-void printPath(list<Node> list) {
-    if (list.empty()) {
+void printPath(list<Node> list1) {
+    vector<double> prices={1.25,1.6,2.00,2.4,2.85,3.25,3.65,4.05};
+    list<string> zones;
+    if (list1.empty()) {
         cout << "The two stops can't be connected";
     }else{
-        cout << "There will be " << list.size() << " stops.";
+        cout << "There will be " << list1.size() << " stops.";
         Node node1;
-        Node node2 = list.front();
-        while (list.size()!=1) {
+        Node node2 = list1.front();
+        zones.push_front(node2.zone);
+        while (list1.size() != 1) {
             node1 = node2;
-            list.pop_front();
-            node2 = list.front();
+            list1.pop_front();
+            node2 = list1.front();
+            if (find(zones.begin(), zones.end(), node2.zone) == zones.end()) {
+                zones.push_front(node2.zone);
+            }
             if (node2.line == "walking") {
                 cout << endl << endl << "Walk from " << node1.code << "(" << node1.zone << ")" << " to " << node2.code
-                     << node2.code << "(" << node2.zone << ")";
+                     << "(" << node2.zone << ")";
             }else if (node2.line != node1.line) {
                         cout << endl << endl << "Take the " << node2.line << " line" << endl;
                 cout << node1.code << "(" << node1.zone << ")" << "->" << node2.code << "(" << node2.zone << ")";
@@ -66,6 +72,11 @@ void printPath(list<Node> list) {
                 cout << "->" << node2.code << "(" << node2.zone << ")";
                 }
              }
+        if (find(zones.begin(), zones.end(), "walking") == zones.end()) {
+            cout << "\nThe total price will be " << prices[zones.size() - 1]<<" euros";
+        }else{
+            cout << "\nThe total price will be " << prices[zones.size()]<<" euros";
+        }
         }
     }
 
@@ -84,13 +95,24 @@ string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
 
     cout<<"Closest bus stops:"<<endl;
     for(int j=0;j<5;j++){
-        cout<<"["<<j<<"]"<<" "<<distances[j].second.code<<" - "<< distances[j].second.stopName << " " <<distances[j].first<<"Km"<<endl;
+        cout<<"["<<j+1<<"]"<<" "<<distances[j].second.code<<" - "<< distances[j].second.stopName << " " <<distances[j].first<<"Km"<<endl;
     }
+    cout << "[0] Go back\n";
     int pos;
     string busStopCode;
     cout<<endl<<"Choose one of the bus stops:";
     cin>>pos;
-    return distances[pos].second.code;
+    if (cin.peek() != '\n' or pos < 0 or pos > 5) {
+        cin.clear();
+        cin.ignore(999, '\n');
+        cout << "Error! Try again\n";
+        cout<<endl<<"Choose one of the bus stops:";
+        cin>>pos;
+    }
+    if (pos == 0) {
+        return "0";
+    }
+    return distances[pos-1].second.code;
 }
 
 

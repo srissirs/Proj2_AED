@@ -39,7 +39,7 @@ bool Graph::exists(int src, int dest, double weight){
     return false;
 }
 
-int Graph::getWeight(int src,int choice,Edge edge){
+double Graph::getWeight(int src,int choice,Edge edge){
 
     if(choice==1){
         if(nodes[src].line==edge.line)  return 0;
