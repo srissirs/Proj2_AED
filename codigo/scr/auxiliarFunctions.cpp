@@ -92,3 +92,6 @@ string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
     cin>>pos;
     return distances[pos].second.code;
 }
+
+
+
