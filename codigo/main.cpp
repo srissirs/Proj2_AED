@@ -30,7 +30,7 @@ int main() {
 
 
 void run(Graph graph){
-    int menuOption;
+    int menuOption=-1;
     string stopCodeSrc;
     string stopCodeDest;
     while (menuOption != 0) {
@@ -183,6 +183,5 @@ void run(Graph graph){
         }
 
     }
-    return 0;
 
 }

@@ -75,6 +75,7 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
                 if(lineName.find("M")!=string::npos){
                     if (graphN.getMap().count(nodes[pos].code)<=0) graphN.addNode(nodes[pos]);
                     graphN.addEdge(graphN.getMap()[oldStopCode],graphN.getMap()[stopCode],weight,lineName);
+
                 }
                 else {
                     if (graphD.getMap().count(nodes[pos].code)<=0) graphD.addNode(nodes[pos]);

@@ -127,7 +127,7 @@ list<Node> Graph::dijkstra_pathNodes(int a, int b,int choice) {
 
 void Graph::dijkstra(int s,int choice) {
     MinHeap<int, int> q(n, -1);
-    for (int v=1; v<=n; v++) {
+    for (int v=0; v<n; v++) {
         nodes[v].dist = INF;
         q.insert(v,INF);
         nodes[v].visited = false;
