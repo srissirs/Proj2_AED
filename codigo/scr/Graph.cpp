@@ -17,6 +17,12 @@ void Graph::addEdge(int src, int dest, double weight,string line) {
     if (!hasDir) nodes[dest].adj.push_back({src,dest, weight,line});
 }
 
+void Graph::addNode(Node node){
+    nodes.push_back(node);
+    mapNodes[node.code]=nodes.size()-1;
+    n++;
+}
+
 bool Graph::exists(int src, int dest, double weight,string line){
     for( auto edge: nodes[src].adj){
         if (edge.weight==weight and edge.dest == dest and edge.line==line)
