@@ -1,18 +1,36 @@
 #include <iostream>
 #include "scr/Graph.h"
 #include "scr/readFiles.h"
-#include "scr/auxiliarFunctions.h"
 #include "scr/menu.h"
 #include <map>
 
 using namespace std;
 
+void run(Graph graph);
+
 int main() {
-    Graph graph = Graph(2787,true);
+    Graph graph = Graph(0,true);
+    Graph graphN = Graph(0,true);
+    Graph graphD = Graph(0,true);
     readDataStops(graph);
-    addLines(graph);
+    addLines(graph, graphN, graphD);
     uniteNearStops(graph);
-    int menuOption = -1;
+    uniteNearStops(graphN);
+    uniteNearStops(graphD);
+    int menuOption;
+
+    displayTimeOfTheDay();
+    cin>>menuOption;
+    if(menuOption==0) run(graph);
+    else if(menuOption==1) run(graphD);
+    else if(menuOption==2) run(graphN);
+
+    return 0;
+}
+
+
+void run(Graph graph){
+    int menuOption;
     string stopCodeSrc;
     string stopCodeDest;
     while (menuOption != 0) {
@@ -165,10 +183,6 @@ int main() {
         }
 
     }
-
-
-
-
     return 0;
 
 }

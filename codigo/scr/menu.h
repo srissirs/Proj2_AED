@@ -3,8 +3,7 @@
 
 
 void displayMainMenu();
-void displayStopsCodeMenu();
-void displaysCoordinatesMenu();
+void displayTimeOfTheDay();
 void displaysMethods();
 
 #endif //PROJ2AED_MENU_H

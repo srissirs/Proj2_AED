@@ -9,19 +9,13 @@ void displayMainMenu(){
     cout << "[0] Exit"<<endl;
 }
 
-void displayStopsCodeMenu(){
+void displayTimeOfTheDay(){
     cout << "-------------MENU-------------"<<endl;
-    cout << "[0] Choose stops by their code"<<endl;
-    cout << "[1] Choose stops by coordinates" << endl;
+    cout<< "Search for:"<<endl;
+    cout << "[0] All lines (day and night)"<<endl;
+    cout << "[1] Day lines" << endl;
+    cout << "[2] Night lines" << endl;
 }
-
-
-void displaysCoordinatesMenu(){
-    cout << "-------------MENU-------------"<<endl;
-    cout << "[0] Choose stops by their code"<<endl;
-    cout << "[1] Choose stops by coordinates" << endl;
-}
-
 
 void displaysMethods(){
     cout << "-----------METHODS------------"<<endl;

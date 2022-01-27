@@ -114,3 +114,6 @@ string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
     }
     return distances[pos-1].second.code;
 }
+
+
+

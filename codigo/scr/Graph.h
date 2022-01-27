@@ -51,6 +51,8 @@ public:
     // Add edge from source to destination with a certain weight
     void addEdge(int src, int dest, double weight, string line);
 
+    void addNode(Node node);
+
     void setNodes(vector<Node> newNodes) {
         this->nodes = newNodes;
         this->n = newNodes.size();
