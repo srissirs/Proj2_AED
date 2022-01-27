@@ -62,7 +62,7 @@ public:
 
     map<string, int> &getMap() { return mapNodes; }
 
-    int getWeight(int src,int choice,Edge edge);
+    double getWeight(int src,int choice,Edge edge);
 
     // ----- Functions to implement in this class -----
     int dijkstra_distance(int a, int b, int choice);
