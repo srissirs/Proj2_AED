@@ -34,7 +34,7 @@ void readDataStops(Graph& graph){
     }
     graph.setMap(mapNodes);
     graph.setNodes(nodes);
-    stops.close();;
+    stops.close();
 }
 
 void addLines(Graph& graph,Graph& graphN,Graph& graphD){
@@ -60,8 +60,7 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
         line_1.ignore(1);
         int pos1;
         string oldStopCode;
-        //  int firstStopPos;
-        // if(numberOfStops_1==0)  numberOfStops_0--;
+
         for (int i=0; i<numberOfStops_0;i++){
             Node node;
             string stopCode;
@@ -111,24 +110,4 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
         }
         line_1.close();
     }
-
-    /*
-      int pos = 5;
-      cout<<graphN.getNodes().operator[](pos).adj.size()<<endl;
-      // TESTES
-
-      //cout << nodes[pos].code +" " + nodes[pos].stopName + " ";
-
-      cout<<graphN.getNodes().size();
-      for(auto p:graphN.getNodes().operator[](pos).adj){
-          cout<<p.line<<endl<<nodes[p.src].code<<endl<<nodes[p.dest].code<<endl<<p.weight<<endl<<endl;
-
-      }*/
-
-
-
-    //cout<<nodes[1184].code;
-    //cout<<nodes[125].code;
-    //cout<< nodes.size();
-
 }

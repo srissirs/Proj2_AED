@@ -52,6 +52,7 @@ double Graph::getWeight(int src,int choice,Edge edge){
         if(nodes[src].zone==nodes[edge.dest].zone) return 0;
         else return 1;
     }
+    return -1;
 }
 // ----------------------------------------------------------
 // 1) Algoritmo de Dijkstra e caminhos mais curtos
@@ -71,6 +72,7 @@ vector<pair<int,list<Node>>> Graph::bestPathLessLineChange(int src, int dest){
     vector<pair<int,list<Node>>> v;
     for (auto edge: nodes[src].adj)
         lineCodes.insert(edge.line);
+
     for (auto line: lineCodes){
         nodes[src].line = line;
         v.push_back({dijkstra_distance(src,dest,1), dijkstra_pathNodes(src,dest,1)});
@@ -158,6 +160,7 @@ bool Graph::bfs(int src,int dest){
     for(Node& node : nodes){
         node.visited=false;
         node.pred=-1;
+        node.line="";
     }
     nodes[src].visited=true;
     queue.push_back(src);
@@ -177,37 +180,3 @@ bool Graph::bfs(int src,int dest){
     }
     return false;
 }
-
-
-
-
-/*
-void Graph::dijkstra(int src) {
-    MinHeap<int,int> q(n,-1);
-    for (int v=0; v<n; v++){
-        nodes[v].dist =INF;
-        q.insert(v,INF);
-        nodes[v].visited = false;
-    }
-    nodes[src].dist = 0;
-    q.decreaseKey(src,0);
-    nodes[src].pred = src;
-    while (q.getSize()>0){
-        int u = q.removeMin();
-        nodes[u].visited= true;
-        for (auto  edge:nodes[u].adj){
-            int dest = edge.dest;
-            int weigh = getWeight(u,1,edge);
-            if (!nodes[dest].visited && nodes[u].dist + weigh < nodes[dest].dist){
-                nodes[dest].dist = nodes[u].dist + weigh;
-                q.decreaseKey(dest, nodes[dest].dist);
-                nodes[dest].line = edge.line;
-                nodes[dest].pred = u;
-            }
-        }
-    }
-   
-
-}
-
-*/
