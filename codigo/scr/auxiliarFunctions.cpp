@@ -43,17 +43,26 @@ void uniteNearStops(Graph& graph, double dis) {
     }
 }
 
-
-
-
-
-void printPath(list<Node> list1) {
+void printPath(int choice, int weight, list<Node> list1) {
     vector<double> prices={1.25,1.25,1.6,2.00,2.4,2.85,3.25,3.65,4.05};
     list<string> zones;
     if (list1.empty()) {
         cout << "The two stops can't be connected";
     }else{
-        cout << "There will be " << list1.size() << " stops.";
+        switch (choice) {
+            case 1:
+                cout << "You change zones "<< weight<< " time(s)";
+                break;
+            case 2:
+                cout << "You change lines "<< weight << " time(s)";
+                break;
+            case 3:
+                cout << "There will be " << weight << " stops.";
+                break;
+            case 4:
+                cout << "Total distance traveled is "<< weight << " km";
+                break;
+        }
         Node node1;
         Node node2 = list1.front();
         zones.push_front(node2.zone);

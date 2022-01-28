@@ -11,7 +11,7 @@ double haversine(double lat1, double lon1, double lat2, double lon2);
 
 void uniteNearStops(Graph& graph,double distance);
 
-void printPath(list<Node> list1);
+void printPath(int choice, int weigh, list<Node> list1);
 
 void bestPathLessLineChange(int src, int dest);
 

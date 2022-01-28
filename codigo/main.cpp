@@ -118,7 +118,8 @@ void run(Graph graph){
 
             if(chosenMethod==1){
                 list<Node> list = graph.dijkstra_pathNodes(src, dest,3);
-                printPath(list);
+                int weight = graph.dijkstra_distance(src,dest,3);
+                printPath(1,weight,list);
             }
             else if(chosenMethod==2){
                 vector<pair<int,list<Node>>> paths = graph.bestPathLessLineChange(src, dest);
@@ -127,16 +128,17 @@ void run(Graph graph){
                     list = paths[i].second;
                     list.front().line = "";
                     cout<<endl<<"------OPTION "<<i+1<<"-------"<<endl;
-                    printPath(list);
+                    printPath(2,paths[i].first,list);
                 }
             }
             else if(chosenMethod==3){
                 list<Node> list = graph.bfs_path(src, dest);
-                printPath(list);
+                printPath(3,list.size(),list);
             }
             else if(chosenMethod==4){
                 list<Node> list = graph.dijkstra_pathNodes(src, dest,2);
-                printPath(list);
+                int weight = graph.dijkstra_distance(src,dest,2);
+                printPath(4,weight,list);
             }
         }
     }
