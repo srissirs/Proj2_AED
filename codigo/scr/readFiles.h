@@ -12,9 +12,9 @@ void readDataStops(Graph& graph);
 
 /**
  * @brief for each line, reads its stops and adds the edges to the nodes, taking the sequence of the stops into account
- * @param graph
- * @param graphN
- * @param graphD
+ * @param graph full graph
+ * @param graphN night graph
+ * @param graphD day graph
  */
 void addLines(Graph& graph,Graph& graphN,Graph& graphD);
 

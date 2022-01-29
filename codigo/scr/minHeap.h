@@ -8,18 +8,18 @@ using namespace std;
 #define RIGHT(i) (2*(i)+1)
 #define PARENT(i) ((i)/2)
 
-// Binary min-heap to represent integer keys of type K with values (priorities) of type V
+///> Binary min-heap to represent integer keys of type K with values (priorities) of type V
 template <class K, class V>
 class MinHeap {
-    struct Node { // An element of the heap: a pair (key, value)
+    struct Node { ///> An element of the heap: a pair (key, value)
         K key;
         V value;
     };
 
-    int size;                  // Number of elements in heap
-    int maxSize;               // Maximum number of elements in heap
-    vector<Node> a;            // The heap array
-    unordered_map<K, int> pos; // maps a key into its position on the array a
+    int size;                  ///> Number of elements in heap
+    int maxSize;               ///> Maximum number of elements in heap
+    vector<Node> a;            ///> The heap array
+    unordered_map<K, int> pos; ///> maps a key into its position on the array a
     const K KEY_NOT_FOUND;
 
     void upHeap(int i);
@@ -27,17 +27,21 @@ class MinHeap {
     void swap(int i1, int i2);
 
 public:
-    MinHeap(int n, const K& notFound); // Create a min-heap for a max of n pairs (K,V) with notFound returned when empty
-    int getSize();              // Return number of elements in the heap
-    bool hasKey(const K& key);  // Heap has key?
-    void insert(const K& key, const V& value);      // Insert (key, value) on the heap
-    void decreaseKey(const K& key, const V& value); // Decrease value of key
-    K removeMin(); // remove and return key with smaller value
+    MinHeap(int n, const K& notFound); ///> Create a min-heap for a max of n pairs (K,V) with notFound returned when empty
+    int getSize();              ///> Return number of elements in the heap
+    bool hasKey(const K& key);  ///> Heap has key?
+    void insert(const K& key, const V& value);      ///> Insert (key, value) on the heap
+    void decreaseKey(const K& key, const V& value); ///> Decrease value of key
+    K removeMin(); ///> remove and return key with smaller value
 };
 
-// ----------------------------------------------
 
-// Make a value go "up the tree" until it reaches its position
+/**
+ * @brief Make a value go "up the tree" until it reaches its position
+ * @tparam K
+ * @tparam V
+ * @param i
+ */
 template <class K, class V>
 void MinHeap<K,V>::upHeap(int i) {
     while (i>1 && a[i].value < a[PARENT(i)].value) { // while pos smaller than parent, keep swapping to upper position
@@ -46,19 +50,35 @@ void MinHeap<K,V>::upHeap(int i) {
     }
 }
 
-// Make a value go "down the tree" until it reaches its position
+
+/**
+ * @brief Make a value go "down the tree" until it reaches its position
+ * @tparam K
+ * @tparam V
+ * @param i
+ */
 template <class K, class V>
 void MinHeap<K,V>::downHeap(int i) {
-    while (LEFT(i) <= size) { // while within heap limits
+    ///> while within heap limits
+    while (LEFT(i) <= size) {
         int j = LEFT(i);
-        if (RIGHT(i)<=size && a[RIGHT(i)].value < a[j].value) j = RIGHT(i); // choose smaller child
-        if (a[i].value < a[j].value) break;   // node already smaller than children, stop
-        swap(i, j);                    // otherwise, swap with smaller child
+        ///> choose smaller child
+        if (RIGHT(i)<=size && a[RIGHT(i)].value < a[j].value) j = RIGHT(i);
+        ///> node already smaller than children, stop
+        if (a[i].value < a[j].value) break;
+        ///> otherwise, swap with smaller child
+        swap(i, j);
         i = j;
     }
 }
 
-// Swap two positions of the heap (update their positions)
+/**
+ * @brief Swap two positions of the heap (update their positions)
+ * @tparam K
+ * @tparam V
+ * @param i1
+ * @param i2
+ */
 template <class K, class V>
 void MinHeap<K,V>::swap(int i1, int i2) {
     Node tmp = a[i1]; a[i1] = a[i2]; a[i2] = tmp;
@@ -66,26 +86,48 @@ void MinHeap<K,V>::swap(int i1, int i2) {
     pos[a[i2].key] = i2;
 }
 
-// ----------------------------------------------
 
-// Create a min-heap for a max of n pairs (K,V) with notFound returned when empty
+/**
+ * @brief Create a min-heap for a max of n pairs (K,V) with notFound returned when empty
+ * @tparam K
+ * @tparam V
+ * @param n
+ * @param notFound
+ */
 template <class K, class V>
 MinHeap<K,V>::MinHeap(int n, const K& notFound) : KEY_NOT_FOUND(notFound), size(0), maxSize(n), a(n+1) {
 }
 
-// Return number of elements in the heap
+/**
+ * @brief Return number of elements in the heap
+ * @tparam K
+ * @tparam V
+ * @return
+ */
 template <class K, class V>
 int MinHeap<K,V>::getSize() {
     return size;
 }
 
-// Heap has key?
+/**
+ * @brief Heap has key?
+ * @tparam K
+ * @tparam V
+ * @param key
+ * @return
+ */
 template <class K, class V>
 bool MinHeap<K, V>::hasKey(const K& key) {
     return pos.find(key) != pos.end();
 }
 
-// Insert (key, value) on the heap
+/**
+ * @brief Insert (key, value) on the heap
+ * @tparam K
+ * @tparam V
+ * @param key
+ * @param value
+ */
 template <class K, class V>
 void MinHeap<K,V>::insert(const K& key, const V& value) {
     if (size == maxSize) return; // heap is full, do nothing
@@ -95,7 +137,13 @@ void MinHeap<K,V>::insert(const K& key, const V& value) {
     upHeap(size);
 }
 
-// Decrease value of key to the indicated value
+/**
+ * @brief Decrease value of key to the indicated value
+ * @tparam K
+ * @tparam V
+ * @param key
+ * @param value
+ */
 template <class K, class V>
 void MinHeap<K,V>::decreaseKey(const K& key, const V& value) {
     if (!hasKey(key)) return; // key does not exist, do nothing
@@ -105,7 +153,12 @@ void MinHeap<K,V>::decreaseKey(const K& key, const V& value) {
     upHeap(i);
 }
 
-// remove and return key with smaller value
+/**
+ * @brief remove and return key with smaller value
+ * @tparam K
+ * @tparam V
+ * @return
+ */
 template <class K, class V>
 K MinHeap<K,V>::removeMin() {
     if (size == 0) return KEY_NOT_FOUND;
