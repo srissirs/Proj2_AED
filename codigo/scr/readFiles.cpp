@@ -87,17 +87,21 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
             line_0 >> stopCode;
             line_0.ignore(1);
             int pos = mapNodes[stopCode];
+            ///> Checks if the stop is in a Day line
             if(lineName.find("M")!=string::npos){
                 if (graphN.getMap().count(nodes[pos].code) <= 0) {
                     mapNodesN[nodes[pos].code] = graphN.getNodes().size();
                     graphN.addNode(nodes[pos]);
+                    ///> Sets maps
                     graphN.setMap(mapNodesN);
                 }
             }
+            ///> Checks if the stop is in a Night line
             else {
                 if (graphD.getMap().count(nodes[pos].code)<=0) {
                     mapNodesD[nodes[pos].code] = graphD.getNodes().size();
                     graphD.addNode(nodes[pos]);
+                    ///> Sets maps
                     graphD.setMap(mapNodesD);
                 }
 
@@ -133,6 +137,7 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
                 if (graphN.getMap().count(nodes[pos].code) <= 0) {
                     mapNodesN[nodes[pos].code] = graphN.getNodes().size();
                     graphN.addNode(nodes[pos]);
+                    ///> Sets maps
                     graphN.setMap(mapNodesN);
                 }
             }
@@ -140,6 +145,7 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
                 if (graphD.getMap().count(nodes[pos].code)<=0) {
                     mapNodesD[nodes[pos].code] = graphD.getNodes().size();
                     graphD.addNode(nodes[pos]);
+                    ///> Sets maps
                     graphD.setMap(mapNodesD);
                 }
             }

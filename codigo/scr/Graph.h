@@ -124,15 +124,19 @@ public:
     int dijkstra_distance(int a, int b, int choice);
 
     /**
-  * @brief Returns the path of nodes from "a" stop to "b" stop with the method of search "choice" in the Dijkstra algorithm
-  */
+     * @brief Returns the path of nodes from "a" stop to "b" stop with the method of search "choice" in the Dijkstra algorithm
+     * @param a
+     * @param b
+     * @param choice
+     * @return
+     */
     list<Node> dijkstra_pathNodes(int a, int b, int choice);
 
     /**
   * @brief Returns the path of nodes from "src" stop to "dest" stop with the method of search bfs
    * @param choice
-     * @param a
-     * @param b
+     * @param scr
+     * @param dest
   */
     list<Node> bfs_path(int src,int dest);
 
@@ -141,7 +145,6 @@ public:
      * @param src
      *  @param dest
   */
-
     bool bfs(int src,int dest);
 
     /**
@@ -150,7 +153,6 @@ public:
      * @param dest
      *  @param src
       */
-
     vector<pair<int,list<Node>>> bestPathLessLineChange(int src, int dest);
 
 };
