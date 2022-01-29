@@ -55,11 +55,12 @@ void run(Graph graph){
             cout<<"Source stop code ( 0 to go back):";
             cin>>stopCodeSrc;
             checkInput(stopCodeSrc,"Source stop code ( 0 to go back):");
-
             while (graph.getMap().count(stopCodeSrc) == 0 and stopCodeSrc != "0") {
                 cout << "Stop code is nonexistent\nSource stop code:";
                 cin >> stopCodeSrc;
+                checkInput(stopCodeSrc,"Source stop code ( 0 to go back):");
             }
+
             if (stopCodeSrc == "0") continue;
 
             cout<<"Destination stop code ( 0 to go back):";
@@ -106,9 +107,10 @@ void run(Graph graph){
 
         }
 
-        int chosenMethod=-1;
+        int chosenMethod;
         while (chosenMethod != 0 and menuOption!=0) {
             cout<<endl;
+
             displaysMethods();
             cin>>chosenMethod;
             checkInput(chosenMethod);
