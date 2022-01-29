@@ -143,6 +143,9 @@ string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
     return distances[pos-1].second.code;
 }
 
+/**
+ * @brief Checks input
+ */
 void checkInput(double & var, string message){
     while (cin.peek() != '\n') {
         cin.clear();
@@ -152,6 +155,10 @@ void checkInput(double & var, string message){
         cin>>var;
     }
 }
+
+/**
+ * @brief Checks input
+ */
 void checkInput(string & var, string message){
     while (cin.peek() != '\n') {
         cin.clear();
@@ -161,6 +168,10 @@ void checkInput(string & var, string message){
         cin>>var;
     }
 }
+
+/**
+ * @brief Checks input
+ */
 void checkInput(int & var){
     while (cin.peek() != '\n' or var > 4) {
         cin.clear();
