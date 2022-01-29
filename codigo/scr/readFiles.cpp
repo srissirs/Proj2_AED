@@ -17,14 +17,14 @@ void readDataStops(Graph& graph){
     string code;
     vector<Node> nodes;
     int vectorPos=0;
-    ///> Until stops is empty
+    /// Until stops is empty
     while(!stops.eof()){
         Node node;
-        ///>Gets code
+        /// Gets code
         getline(stops,code,',');
-        ///> Gets stopName
+        /// Gets stopName
         getline(stops,stopName,',');
-        ///> Gets zone
+        /// Gets zone
         getline(stops,zone,',');
         stops>>latitude;
         stops.ignore(1);
@@ -35,17 +35,17 @@ void readDataStops(Graph& graph){
         node.zone=zone;
         node.latitude=latitude;
         node.longitude=longitude;
-        ///> Adds node
+        /// Adds node
         nodes.push_back(node);
-        ///> Adds code-vectorPos to the map
+        /// Adds code-vectorPos to the map
         mapNodes[code]= vectorPos;
         vectorPos++;
     }
-    ///> Sets map
+    /// Sets map
     graph.setMap(mapNodes);
-    ///> Sets nodes
+    /// Sets nodes
     graph.setNodes(nodes);
-    ///> Closes file
+    /// Closes file
     stops.close();
 }
 
@@ -62,14 +62,14 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
     map<string, int> mapNodesD;
     map<string ,int> mapNodesN;
     vector<Node> nodes = graph.getNodes();
-    ///> Until lines is empty
+    /// Until lines is empty
     while(!lines.eof()){
         getline(lines,lineCode,',');
         string lineName;
         getline(lines,lineName);
-        ///> Gets the file of lines in the direction 1
+        /// Gets the file of lines in the direction 1
         string docDir_1 = beginDocDir + lineCode + "_1.csv";
-        ///> Gets the file of lines in the direction 0
+        /// Gets the file of lines in the direction 0
         string docDir_0 = beginDocDir + lineCode + "_0.csv";
         ifstream line_0(docDir_0);
         ifstream line_1(docDir_1);
@@ -80,14 +80,14 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
         line_1.ignore(1);
         int pos1;
         string oldStopCode;
-        ///>For all stops in the line in the direction 0
+        /// For all stops in the line in the direction 0
         for (int i=0; i<numberOfStops_0;i++){
             Node node;
             string stopCode;
             line_0 >> stopCode;
             line_0.ignore(1);
             int pos = mapNodes[stopCode];
-            ///> Checks if the stop is in a Day line
+            /// Checks if the stop is in a Day line
             if(lineName.find("M")!=string::npos){
                 if (graphN.getMap().count(nodes[pos].code) <= 0) {
                     mapNodesN[nodes[pos].code] = graphN.getNodes().size();
@@ -96,7 +96,7 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
                     graphN.setMap(mapNodesN);
                 }
             }
-            ///> Checks if the stop is in a Night line
+            /// Checks if the stop is in a Night line
             else {
                 if (graphD.getMap().count(nodes[pos].code)<=0) {
                     mapNodesD[nodes[pos].code] = graphD.getNodes().size();
@@ -107,26 +107,26 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
 
             }
             if(i>0){
-                ///> Gets weight between pos1 and pos
+                /// Gets weight between pos1 and pos
                 double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
                 graph.addEdge(pos1,pos,weight,lineName);
-                ///> Checks if it is a night line
+                /// Checks if it is a night line
                 if(lineName.find("M")!=string::npos){
-                    ///> Adds the edge
+                    /// Adds the edge
                     graphN.addEdge(graphN.getMap()[oldStopCode],graphN.getMap()[stopCode],weight,lineName);
 
                 }
                 else {
-                    ///> Adds the edge
+                    /// Adds the edge
                     graphD.addEdge(graphD.getMap()[oldStopCode],graphD.getMap()[stopCode],weight,lineName);
                 }
             }
             oldStopCode=stopCode;
             pos1=pos;
         }
-        ///> Closes file
+        /// Closes file
         line_0.close();
-        ///>For all stops in the line in the direction 1
+        /// For all stops in the line in the direction 1
         for (int i=0; i<numberOfStops_1;i++){
             Node node;
             string stopCode;
@@ -137,7 +137,7 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
                 if (graphN.getMap().count(nodes[pos].code) <= 0) {
                     mapNodesN[nodes[pos].code] = graphN.getNodes().size();
                     graphN.addNode(nodes[pos]);
-                    ///> Sets maps
+                    /// Sets maps
                     graphN.setMap(mapNodesN);
                 }
             }
@@ -145,30 +145,30 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
                 if (graphD.getMap().count(nodes[pos].code)<=0) {
                     mapNodesD[nodes[pos].code] = graphD.getNodes().size();
                     graphD.addNode(nodes[pos]);
-                    ///> Sets maps
+                    /// Sets maps
                     graphD.setMap(mapNodesD);
                 }
             }
 
 
             if(i>0){
-                ///> Gets weight between pos1 and pos
+                /// Gets weight between pos1 and pos
                 double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
                 graph.addEdge(pos1,pos,weight,lineName);
-                ///> Checks if it is a night line
+                /// Checks if it is a night line
                 if(lineName.find("M")!=string::npos){
-                    ///> Adds the edge
+                    /// Adds the edge
                     graphN.addEdge(graphN.getMap()[oldStopCode],graphN.getMap()[stopCode],weight,lineName);
                 }
                 else {
-                    ///> Adds the edge
+                    /// Adds the edge
                     graphD.addEdge(graphD.getMap()[oldStopCode],graphD.getMap()[stopCode],weight,lineName);
                 }
             }
             oldStopCode=stopCode;
             pos1=pos;
         }
-        ///> Closes file
+        /// Closes file
         line_1.close();
     }
 }
