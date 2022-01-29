@@ -1,6 +1,6 @@
 #include <iostream>
-#include "scr/Graph.h"
-#include "scr/readFiles.h"
+#include "Graph.h"
+#include "readFiles.h"
 #include <map>
 
 using namespace std;
@@ -107,7 +107,7 @@ void run(Graph graph){
 
         }
 
-        int chosenMethod;
+        int chosenMethod=-1;
         while (chosenMethod != 0 and menuOption!=0) {
             cout<<endl;
 
@@ -125,14 +125,8 @@ void run(Graph graph){
             }
             // Path with less change of line
             else if(chosenMethod==2){
-                vector<pair<int,list<Node>>> paths = graph.bestPathLessLineChange(src, dest);
-                list<Node> list;
-                for(int i=0;i<paths.size();i++){
-                    list = paths[i].second;
-                    list.front().line = "";
-                    cout<<endl<<"------OPTION "<<i+1<<"-------"<<endl;
-                    printPath(2,paths[i].first,list);
-                }
+                pair<int,list<Node>> path = graph.bestPathLessLineChange(src, dest);
+                printPath(2,path.first,path.second);
             }
             // Path with less bus stops
             else if(chosenMethod==3){
