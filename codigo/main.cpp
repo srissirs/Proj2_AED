@@ -13,7 +13,6 @@ int main() {
     Graph graphD = Graph(0,true);
     readDataStops(graph);
     addLines(graph, graphN, graphD);
-
     int menuOption;
     displayTimeOfTheDay();
     cin>>menuOption;

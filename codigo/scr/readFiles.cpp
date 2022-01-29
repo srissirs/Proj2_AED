@@ -53,11 +53,13 @@ void readDataStops(Graph& graph){
  * @brief for each line, reads its stops and adds the edges to the nodes, taking the sequence of the stops into account
  */
 void addLines(Graph& graph,Graph& graphN,Graph& graphD){
+    vector<Node> n;
     ifstream lines("../codigo/dataset/lines.csv");
     string firstLine;
     getline(lines,firstLine);
     string beginDocDir= "../codigo/dataset/line_";
     string lineCode;
+    int PosN = 0, PosD = 0;
     map<string ,int> mapNodes = graph.getMap();
     map<string, int> mapNodesD;
     map<string ,int> mapNodesN;
@@ -90,7 +92,8 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
             // Checks if the stop is in a Day line
             if(lineName.find("M")!=string::npos){
                 if (graphN.getMap().count(nodes[pos].code) <= 0) {
-                    mapNodesN[nodes[pos].code] = graphN.getNodes().size();
+                    mapNodesN[nodes[pos].code] = PosN;
+                    PosN++;
                     graphN.addNode(nodes[pos]);
                     // Sets maps
                     graphN.setMap(mapNodesN);
@@ -99,7 +102,8 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
             // Checks if the stop is in a Night line
             else {
                 if (graphD.getMap().count(nodes[pos].code)<=0) {
-                    mapNodesD[nodes[pos].code] = graphD.getNodes().size();
+                    mapNodesD[nodes[pos].code] = PosD;
+                    PosD++;
                     graphD.addNode(nodes[pos]);
                     // Sets maps
                     graphD.setMap(mapNodesD);
@@ -135,7 +139,8 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
             int pos = mapNodes[stopCode];
             if(lineName.find("M")!=string::npos){
                 if (graphN.getMap().count(nodes[pos].code) <= 0) {
-                    mapNodesN[nodes[pos].code] = graphN.getNodes().size();
+                    mapNodesN[nodes[pos].code] = PosN;
+                    PosN++;
                     graphN.addNode(nodes[pos]);
                     // Sets maps
                     graphN.setMap(mapNodesN);
@@ -143,7 +148,8 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
             }
             else {
                 if (graphD.getMap().count(nodes[pos].code)<=0) {
-                    mapNodesD[nodes[pos].code] = graphD.getNodes().size();
+                    mapNodesD[nodes[pos].code] = PosD;
+                    PosD++;
                     graphD.addNode(nodes[pos]);
                     // Sets maps
                     graphD.setMap(mapNodesD);
@@ -171,4 +177,6 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
         // Closes file
         line_1.close();
     }
+
+
 }

@@ -8,7 +8,7 @@
 /**
      * @brief Constructor: nr nodes and direction (default: undirected)
      */
-Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {
+Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num) {
 }
 
 /**
@@ -80,7 +80,7 @@ int Graph::dijkstra_distance(int a, int b,int choice) {
 }
 
 /**
-* @brief Returns a vector of pairs of int with the distance of the scr to dest in the dijkstra algorithm and the path from scr to dest
+* @brief (Complexity O(|L| |E| log|V| )) Returns a vector of pairs of int with the distance of the scr to dest in the dijkstra algorithm and the path from scr to dest
 * The function returns a vector of pairs because the scr can start in different lines
   */
 vector<pair<int,list<Node>>> Graph::bestPathLessLineChange(int src, int dest){
@@ -149,7 +149,7 @@ list<Node> Graph::dijkstra_pathNodes(int a, int b,int choice) {
 
 
 /**
- * @brief The algorithm of Dijkstra that takes the node where we start and the choice of search method to use (Complexity: O(|edge| log(v)) )
+ * @brief (Complexity: O(|edge| log(v))) The algorithm of Dijkstra that takes the node where we start and the choice of search method to use
  */
 void Graph::dijkstra(int s,int choice) {
     MinHeap<int, int> q(n, -1);
@@ -183,7 +183,7 @@ void Graph::dijkstra(int s,int choice) {
 }
 
 /**
-* @brief Implements the bfs method of search to connect "src" stop and "dest" stop and returning true if the stops can be connected and false if not (Complexity O(|V| + |E|))
+* @brief (Complexity O(|V| + |E|)) Implements the bfs method of search to connect "src" stop and "dest" stop and returning true if the stops can be connected and false if not
 */
 
 bool Graph::bfs(int src,int dest){

@@ -111,6 +111,7 @@ string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
     // Goes through all the nodes and adds them to a vector of pairs with the distance of the stop and the node
     for (int i=0; i<graph.getNodes().size();i++) {
         Node node=graph.getNodes()[i];
+
         distances.push_back({haversine(latitude,longitude,node.latitude,node.longitude),node});
     }
     // Sorts by distance
@@ -121,7 +122,7 @@ string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
     cout<<"Closest bus stops:"<<endl;
     // Prints the information of the closest bus stops
     for(int j=0;j<5;j++){
-        cout<<"["<<j+1<<"]"<<" "<<distances[j].second.code<<" - "<< distances[j].second.stopName << " " <<distances[j].first<<"Km"<<endl;
+            cout<<"["<<j+1<<"]"<<" "<<distances[j].second.code<<" - "<< distances[j].second.stopName << " " <<distances[j].first<<"Km"<<endl;
     }
     cout << "[0] Go back\n";
     int pos;
