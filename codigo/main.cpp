@@ -21,6 +21,7 @@ int main() {
     cout << "What's your max walking distance (km) :";
     cin>>walkingDistance;
     checkInput(walkingDistance,"What's your max walking distance (km) :");
+    // Chooses the graph
     if(menuOption==0){
         uniteNearStops(graph, walkingDistance);
         run(graph);}
@@ -50,6 +51,7 @@ void run(Graph graph){
             displayMainMenu();
             cin>>menuOption;
         }
+        // By stop code
         if(menuOption==1){
             cout<<"---------Stops Codes---------"<<endl;
             cout<<"Source stop code ( 0 to go back):";
@@ -60,7 +62,6 @@ void run(Graph graph){
                 cin >> stopCodeSrc;
                 checkInput(stopCodeSrc,"Source stop code ( 0 to go back):");
             }
-
             if (stopCodeSrc == "0") continue;
 
             cout<<"Destination stop code ( 0 to go back):";
@@ -73,7 +74,7 @@ void run(Graph graph){
                 checkInput(stopCodeDest,"Destination stop code ( 0 to go back):");
             }
             if (stopCodeDest == "0") continue;
-
+        // Latitude and longitude
         }else if(menuOption==2){
             double srcLatitude;
             double srcLongitude;
@@ -117,12 +118,13 @@ void run(Graph graph){
 
             int src = graph.getMap()[stopCodeSrc];
             int dest=graph.getMap()[stopCodeDest];
-
+            // Cheaper route
             if(chosenMethod==1){
                 list<Node> list = graph.dijkstra_pathNodes(src, dest,3);
                 int weight = graph.dijkstra_distance(src,dest,3);
                 printPath(1,weight,list);
             }
+            // Path with less change of line
             else if(chosenMethod==2){
                 vector<pair<int,list<Node>>> paths = graph.bestPathLessLineChange(src, dest);
                 list<Node> list;
@@ -133,10 +135,12 @@ void run(Graph graph){
                     printPath(2,paths[i].first,list);
                 }
             }
+            // Path with less bus stops
             else if(chosenMethod==3){
                 list<Node> list = graph.bfs_path(src, dest);
                 printPath(3,list.size(),list);
             }
+            // Path with less distance
             else if(chosenMethod==4){
                 list<Node> list = graph.dijkstra_pathNodes(src, dest,2);
                 int weight = graph.dijkstra_distance(src,dest,2);
