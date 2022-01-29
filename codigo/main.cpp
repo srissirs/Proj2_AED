@@ -56,7 +56,7 @@ void run(Graph graph){
             cin>>stopCodeSrc;
             checkInput(stopCodeSrc,"Source stop code ( 0 to go back):");
             while (graph.getMap().count(stopCodeSrc) == 0 and stopCodeSrc != "0") {
-                cout << "Stop code is nonexistent\nSource stop code:";
+                cout << "Stop code is nonexistent\nSource stop code ( 0 to go back):";
                 cin >> stopCodeSrc;
                 checkInput(stopCodeSrc,"Source stop code ( 0 to go back):");
             }
@@ -68,8 +68,9 @@ void run(Graph graph){
             checkInput(stopCodeDest,"Destination stop code ( 0 to go back):");
 
             while (graph.getMap().count(stopCodeDest) == 0 and stopCodeDest!="0") {
-                cout << "Stop code is nonexistent\nSource stop code:";
+                cout << "Stop code is nonexistent\nSource stop code ( 0 to go back):";
                 cin >> stopCodeDest;
+                checkInput(stopCodeDest,"Destination stop code ( 0 to go back):");
             }
             if (stopCodeDest == "0") continue;
 
@@ -83,7 +84,6 @@ void run(Graph graph){
 
             cout<<"Source Longitude:";
             cin>>srcLongitude;
-            cout<<endl;
             checkInput(srcLongitude,"Source Longitude:");
 
             stopCodeSrc=chooseStopByCoordinates(graph,srcLatitude,srcLongitude);
