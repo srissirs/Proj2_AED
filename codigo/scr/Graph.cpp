@@ -120,7 +120,6 @@ list<Node> Graph::dijkstra_pathNodes(int a, int b,int choice) {
         v=nodes[v].pred;
         path.push_front(nodes[v]);
     }
-
     return path;
 }
 
@@ -133,6 +132,7 @@ void Graph::dijkstra(int s,int choice) {
         nodes[v].dist = INF;
         q.insert(v,INF);
         nodes[v].visited = false;
+        nodes[v].line = "";
    }
     nodes[s].dist = 0;
     q.decreaseKey(s, 0);
