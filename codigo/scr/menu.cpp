@@ -2,6 +2,11 @@
 #include "menu.h"
 
 using namespace std;
+
+/**
+ * @brief Menu where users choose if they want to search for the stops by their codes or if he wants to
+ * see the closest stops to some coordinates
+ */
 void displayMainMenu(){
     cout << "-------------MENU-------------"<<endl;
     cout << "[1] Choose stops by their code"<<endl;
@@ -9,6 +14,9 @@ void displayMainMenu(){
     cout << "[0] Exit"<<endl;
 }
 
+/**
+ * @brief Menu where users choose if they want to see the travel path from day lines, night lines or both
+ */
 void displayTimeOfTheDay(){
     cout << "-------------MENU-------------"<<endl;
     cout<< "Search for:"<<endl;
@@ -17,6 +25,9 @@ void displayTimeOfTheDay(){
     cout << "[2] Night lines" << endl;
 }
 
+/**
+ *@brief Menu where users choose which method to use for the path that connects the stops
+ */
 void displaysMethods(){
     cout << "-----------METHODS------------"<<endl;
     cout << "[1] Best price"<<endl;
