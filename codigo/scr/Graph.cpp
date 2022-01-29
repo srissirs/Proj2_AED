@@ -67,6 +67,7 @@ double Graph::getWeight(int src,int choice,Edge edge){
         if(nodes[src].zone==nodes[edge.dest].zone) return 0;
         else return 1;
     }
+    return -1;
 }
 
 /**
@@ -147,7 +148,6 @@ list<Node> Graph::dijkstra_pathNodes(int a, int b,int choice) {
         v=nodes[v].pred;
         path.push_front(nodes[v]);
     }
-
     return path;
 }
 
@@ -163,6 +163,7 @@ void Graph::dijkstra(int s,int choice) {
         nodes[v].dist = INF;
         q.insert(v,INF);
         nodes[v].visited = false;
+        nodes[v].line = "";
    }
     ///> Sets source
     nodes[s].dist = 0;
@@ -196,6 +197,7 @@ bool Graph::bfs(int src,int dest){
     for(Node& node : nodes){
         node.visited=false;
         node.pred=-1;
+        node.line="";
     }
     ///> Sets the node src
     nodes[src].visited=true;
@@ -218,7 +220,3 @@ bool Graph::bfs(int src,int dest){
     ///>Didn't find the destination
     return false;
 }
-
-
-
-

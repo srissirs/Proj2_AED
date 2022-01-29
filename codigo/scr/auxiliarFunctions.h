@@ -2,6 +2,7 @@
 #define PROJ2AED_AUXILIARFUNCTIONS_H
 
 #include "Graph.h"
+#include "menu.h"
 #include <cmath>
 
 using namespace std;
@@ -19,13 +20,13 @@ double haversine(double lat1, double lon1, double lat2, double lon2);
  * @brief Unites all near nodes in the graph with distance smaller than dist
  * @param graph
  */
-void uniteNearStops(Graph& graph);
+void uniteNearStops(Graph& graph,double distance);
 
 /**
  * @brief Prints the path showing the number of stops and price
  * @param list1
  */
-void printPath(list<Node> list1);
+void printPath(int choice, int weigh, list<Node> list1);
 
 /**
  * @brief Shows the nearest 5 stops to the latitude and longitude and returns the code of the stop chosen by the user or 0 if they want to go back
@@ -34,5 +35,11 @@ void printPath(list<Node> list1);
  * @param longitude
  */
 string chooseStopByCoordinates(Graph graph, double latitude, double longitude);
+
+void checkInput(double& var, string message);
+
+void checkInput(string & var, string message);
+
+void checkInput(int & var);
 
 #endif //PROJ2AED_AUXILIARFUNCTIONS_H

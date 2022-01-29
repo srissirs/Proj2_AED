@@ -29,10 +29,10 @@ struct Node {
 };
 class Graph {
     int n;              /// Graph size (vertices are numbered from 1 to n)
-    bool hasDir;        /// false: undirect; true: directed
+    bool hasDir;        /// false: undirected; true: directed
     vector<Node> nodes; /// The list of nodes being represented
-
     map<string, int> mapNodes; /// The map of the code of the node and his position
+
 
     /**
      * @brief The algorithm of Dijkstra that takes the node where we start and the choice of search method to use
@@ -49,7 +49,6 @@ public:
      * @param dir
      */
     Graph(int nodes, bool dir = false);
-
 
     /**
      *     @brief Checks if the edge with the parameters exists in the graph
@@ -135,7 +134,6 @@ public:
      * @param a
      * @param b
   */
-
     list<Node> bfs_path(int src,int dest);
 
     /**
@@ -154,8 +152,6 @@ public:
       */
 
     vector<pair<int,list<Node>>> bestPathLessLineChange(int src, int dest);
-
-
 
 };
 #endif

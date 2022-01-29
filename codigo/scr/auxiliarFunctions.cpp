@@ -2,6 +2,9 @@
 #include <iomanip>
 #include "auxiliarFunctions.h"
 
+
+using namespace std;
+
 /**
  * @brief Returns the distance in kilometers from two coordinates
  */
@@ -27,40 +30,50 @@ double haversine(double lat1, double lon1,
     return rad * c;
 }
 
+
 /**
  * @brief Unites all near nodes in the graph with distance smaller than dist
  */
-void uniteNearStops(Graph& graph) {
+void uniteNearStops(Graph& graph, double dis) {
     vector<Node> nodes = graph.getNodes();
     /// Searches all nodes
     for (int i=0; i<nodes.size()-1;i++){
         for (int j=i+1; j< nodes.size();j++ ){
             double distance = haversine(nodes[i].latitude,nodes[i].longitude,nodes[j].latitude,nodes[j].longitude);
             /// If the stops have a distance smaller than dist and doesn't already exist a edge that connects them
-            if(distance<=0.150 and !graph.exists(i,j,distance)){
-                /// Adds the edge to the graph
+            if(distance<=dis and !graph.exists(i,j,distance)){
                 graph.addEdge(i,j,distance,"walking");
-            }
-            /// If the stops have a distance smaller than dist and doesn't already exist a edge that connects them
-            if(distance<=0.150 and !graph.exists(j,i,distance)){
-                /// Adds the edge to the graph
+            }else if(distance<=dis and !graph.exists(j,i,distance)){
                 graph.addEdge(j,i,distance,"walking");
             }
         }
     }
 }
 
+
 /**
  * @brief Prints the path showing the number of stops and price
  */
-void printPath(list<Node> list1) {
-    ///Vector with the of the number of zones
+void printPath(int choice, int weight, list<Node> list1) {
     vector<double> prices={1.25,1.25,1.6,2.00,2.4,2.85,3.25,3.65,4.05};
     list<string> zones;
     if (list1.empty()) {
         cout << "The two stops can't be connected";
     }else{
-        cout << "There will be " << list1.size() << " stops.";
+        switch (choice) {
+            case 1:
+                cout << "You change zones "<< weight<< " time(s)";
+                break;
+            case 2:
+                cout << "You change lines "<< weight << " time(s)";
+                break;
+            case 3:
+                cout << "There will be " << weight << " stops.";
+                break;
+            case 4:
+                cout << "Total distance traveled is "<< weight << " km";
+                break;
+        }
         Node node1;
         Node node2 = list1.front();
         zones.push_front(node2.zone);
@@ -116,7 +129,7 @@ string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
     cout<<endl<<"Choose one of the bus stops:";
     cin>>pos;
     /// Checks if the pos is in the right format
-    if (cin.peek() != '\n' or pos < 0 or pos > 5) {
+    while (cin.peek() != '\n' or pos < 0 or pos > 5) {
         cin.clear();
         cin.ignore(999, '\n');
         cout << "Error! Try again\n";
@@ -128,6 +141,34 @@ string chooseStopByCoordinates(Graph graph, double latitude, double longitude){
         return "0";
     }
     return distances[pos-1].second.code;
+}
+
+void checkInput(double & var, string message){
+    while (cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(999, '\n');
+        cout << "Error! Try again\n";
+        cout<<message;
+        cin>>var;
+    }
+}
+void checkInput(string & var, string message){
+    while (cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(999, '\n');
+        cout << "Error! Try again\n";
+        cout<<message;
+        cin>>var;
+    }
+}
+void checkInput(int & var){
+    while (cin.peek() != '\n' or var > 4) {
+        cin.clear();
+        cin.ignore(999, '\n');
+        cout << "Error! Try again\n";
+        displaysMethods();
+        cin >> var;
+    }
 }
 
 

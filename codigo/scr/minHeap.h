@@ -167,7 +167,6 @@ K MinHeap<K,V>::removeMin() {
     a[1] = a[size--];
     downHeap(1);
     return min;
-};
-
+}
 
 #endif //PROJ2AED_MINHEAP_H

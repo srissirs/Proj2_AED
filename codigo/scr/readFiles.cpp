@@ -59,6 +59,8 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
     string beginDocDir= "../codigo/dataset/line_";
     string lineCode;
     map<string ,int> mapNodes = graph.getMap();
+    map<string, int> mapNodesD;
+    map<string ,int> mapNodesN;
     vector<Node> nodes = graph.getNodes();
     ///> Until lines is empty
     while(!lines.eof()){
@@ -85,22 +87,32 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
             line_0 >> stopCode;
             line_0.ignore(1);
             int pos = mapNodes[stopCode];
+            if(lineName.find("M")!=string::npos){
+                if (graphN.getMap().count(nodes[pos].code) <= 0) {
+                    mapNodesN[nodes[pos].code] = graphN.getNodes().size();
+                    graphN.addNode(nodes[pos]);
+                    graphN.setMap(mapNodesN);
+                }
+            }
+            else {
+                if (graphD.getMap().count(nodes[pos].code)<=0) {
+                    mapNodesD[nodes[pos].code] = graphD.getNodes().size();
+                    graphD.addNode(nodes[pos]);
+                    graphD.setMap(mapNodesD);
+                }
+
+            }
             if(i>0){
                 ///> Gets weight between pos1 and pos
                 double weight = haversine(nodes[pos1].latitude,nodes[pos1].longitude,nodes[pos].latitude,nodes[pos].longitude);
                 graph.addEdge(pos1,pos,weight,lineName);
                 ///> Checks if it is a night line
                 if(lineName.find("M")!=string::npos){
-                    ///> Checks if the node is already in the graph
-                    if (graphN.getMap().count(nodes[pos].code)<=0) graphN.addNode(nodes[pos]);
                     ///> Adds the edge
                     graphN.addEdge(graphN.getMap()[oldStopCode],graphN.getMap()[stopCode],weight,lineName);
 
                 }
                 else {
-
-                    ///> Checks if the node is already in the graph
-                    if (graphD.getMap().count(nodes[pos].code)<=0) graphD.addNode(nodes[pos]);
                     ///> Adds the edge
                     graphD.addEdge(graphD.getMap()[oldStopCode],graphD.getMap()[stopCode],weight,lineName);
                 }
@@ -117,6 +129,21 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
             line_1 >> stopCode;
             line_1.ignore(1);
             int pos = mapNodes[stopCode];
+            if(lineName.find("M")!=string::npos){
+                if (graphN.getMap().count(nodes[pos].code) <= 0) {
+                    mapNodesN[nodes[pos].code] = graphN.getNodes().size();
+                    graphN.addNode(nodes[pos]);
+                    graphN.setMap(mapNodesN);
+                }
+            }
+            else {
+                if (graphD.getMap().count(nodes[pos].code)<=0) {
+                    mapNodesD[nodes[pos].code] = graphD.getNodes().size();
+                    graphD.addNode(nodes[pos]);
+                    graphD.setMap(mapNodesD);
+                }
+            }
+
 
             if(i>0){
                 ///> Gets weight between pos1 and pos
@@ -124,13 +151,10 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
                 graph.addEdge(pos1,pos,weight,lineName);
                 ///> Checks if it is a night line
                 if(lineName.find("M")!=string::npos){
-                    ///> Checks if the node is already in the graph
-                    if (graphN.getMap().count(nodes[pos].code)<=0) graphN.addNode(nodes[pos]);
+                    ///> Adds the edge
                     graphN.addEdge(graphN.getMap()[oldStopCode],graphN.getMap()[stopCode],weight,lineName);
                 }
                 else {
-                    ///> Checks if the node is already in the graph
-                    if (graphD.getMap().count(nodes[pos].code)<=0)graphD.addNode(nodes[pos]);
                     ///> Adds the edge
                     graphD.addEdge(graphD.getMap()[oldStopCode],graphD.getMap()[stopCode],weight,lineName);
                 }
@@ -141,6 +165,4 @@ void addLines(Graph& graph,Graph& graphN,Graph& graphD){
         ///> Closes file
         line_1.close();
     }
-
-
 }
